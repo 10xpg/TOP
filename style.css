@@ -25,9 +25,10 @@ a {
 button {
   background-color: #3882f6;
   color: #f9faf8;
-  border: #3882f6;
+  border: #f9faf8;
+
   border-radius: 5px;
-  padding: 6px 18px;
+  padding: 6px 22px;
   margin: 10px 0px;
 }
 
@@ -132,4 +133,49 @@ span {
 
 .quote-container {
   background-color: #e5e7eb;
+}
+
+.p-tag {
+  text-align: start;
+  font-style: normal;
+  font-size: medium;
+  font-weight: 300;
+  display: block;
+}
+
+.action-container {
+  padding: 100px 150px;
+}
+
+.action-bar {
+  color: #f9faf8;
+  margin: 20px;
+  padding: 50px 50px;
+  background-color: #3882f6;
+  border: #f9faf8;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.subtext {
+  font-size: small;
+  color: #e5e7eb;
+}
+
+.action-button {
+  outline-style: solid;
+}
+
+.footer {
+  text-align: center;
+  color: #e5e7eb;
+  background-color: #1f2937;
+  font-weight: 100;
+  font-size: normal;
+  width: auto;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
