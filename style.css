@@ -40,6 +40,21 @@ h1 {
   text-align: center;
 }
 
+p {
+  font-weight: 100;
+  font-style: italic;
+  font-size: 36px;
+  padding: 100px 150px;
+}
+
+span {
+  display: block;
+  text-align: end;
+  font-size: smaller;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -57,8 +72,7 @@ h1 {
   display: flex;
   padding: 0px 100px;
   justify-content: center;
-  /* padding-left: 50px;
-  padding-right: 50px; */
+
   padding-top: 50px;
   padding-bottom: 50px;
   gap: 50px;
@@ -114,4 +128,8 @@ h1 {
   max-width: 150px;
   padding: 22px;
   padding-top: 10px;
+}
+
+.quote-container {
+  background-color: #e5e7eb;
 }
