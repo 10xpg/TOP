@@ -1,5 +1,6 @@
 // console.log("Hello World");
 
+// gets the computer player value
 function getComputerChoice() {
   let choice = Math.floor(Math.random() * 3);
 
@@ -12,19 +13,23 @@ function getComputerChoice() {
   }
 }
 
+// gets the human player value
 function getHumanChoice() {
   let choice = prompt("Let's play Rock, Paper or Scissors: ");
 
   return choice.toLowerCase();
 }
 
+// initializes scores
 let humanScore = 0;
 let computerScore = 0;
 
+// whole game logic
 function playGame() {
   let humanSelection = getHumanChoice();
   let computerSelection = getComputerChoice();
 
+  //   logic per round
   function playRound(humanSelection, computerSelection) {
     if (humanSelection === "paper" && computerSelection === "rock") {
       console.log("You win! Paper beats Rock");
@@ -49,19 +54,23 @@ function playGame() {
     }
   }
 
+  //   play a round
   playRound(humanSelection, computerSelection);
 
   console.log("You: ", humanScore);
   console.log("Pc: ", computerScore);
 }
 
+// plays for 5 rounds
 rounds = 6;
 for (let i = 1; i < rounds; i++) {
   console.log(`Round ${i} `);
   playGame();
 }
 
+// results announcement logic
 result = () => {
+  alert("Game over");
   if (humanScore > computerScore) {
     alert("You win! " + `You: ${humanScore} - Pc: ${computerScore}`);
   } else if (humanScore < computerScore) {
@@ -70,4 +79,5 @@ result = () => {
     alert("Tie! " + `You: ${humanScore} - Pc: ${computerScore}`);
   }
 };
+// announce results
 result();
