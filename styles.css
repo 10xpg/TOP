@@ -11,10 +11,6 @@ body {
   background-color: var(--bg);
 }
 
-/* img{
-    ov
-} */
-
 .parent {
   display: flex;
 }
@@ -26,20 +22,26 @@ body {
   background-size: cover;
   position: relative;
   display: flex;
+  flex-direction: row;
   justify-content: center;
 }
 
 .logo-caption {
+  padding: 15px 250px;
   position: absolute;
-  top: 250px;
+  top: 220px;
   display: flex;
   align-items: center;
   font-family: norse-bold, system-ui, -apple-system, BlinkMacSystemFont,
     sans-serif;
   font-size: 100px;
   color: white;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
+.logo-name {
+  padding-top: 20px;
+}
 .credit {
   position: absolute;
   bottom: 10px;
