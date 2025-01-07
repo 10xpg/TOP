@@ -1,0 +1,15 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 250px);
+  grid-template-rows: repeat(3, 250px);
+}
+
+.board button {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.turn {
+  font-size: x-large;
+  padding-bottom: 25px;
+}
