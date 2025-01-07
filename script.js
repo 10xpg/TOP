@@ -205,6 +205,8 @@ const GameController = function () {
   return {
     getBoard: gameBoard.getBoard,
     playRound,
+    checkWin,
+    getPlayers: players.getPlayers,
     getActivePlayer,
     switchPlayerTurn,
   };
@@ -214,6 +216,10 @@ const game = GameController();
 const DisplayController = function () {
   const playerTurnDiv = document.querySelector(".turn");
   const boardDiv = document.querySelector(".board");
+  const profileOneDiv = document.querySelector(".profile1");
+  const profileTwoDiv = document.querySelector(".profile2");
+  const resultDiv = document.querySelector(".result");
+  const starter = document.querySelector(".starter");
 
   const updateScreen = () => {
     boardDiv.textContent = "";
@@ -221,6 +227,39 @@ const DisplayController = function () {
     const activePlayer = game.getActivePlayer();
 
     playerTurnDiv.textContent = `${activePlayer.playerName}'s turn...`;
+
+    profileOneDiv.textContent = `${game.getPlayers()[0].playerName} --> ${
+      game.getPlayers()[0].playerMarker
+    }`;
+    profileTwoDiv.textContent = `${game.getPlayers()[1].playerName} --> ${
+      game.getPlayers()[1].playerMarker
+    }`;
+
+    resultDiv.textContent = `Result : `;
+
+    if (game.checkWin()) {
+      resultDiv.textContent = `Result : ${game.checkWin()}`;
+      playerTurnDiv.textContent = "GAME OVER";
+    } else {
+      playerTurnDiv.textContent = `${activePlayer.playerName}'s turn...`;
+    }
+
+    starter.addEventListener("click", () => {
+      // Reset the game board state
+      game.getBoard().forEach(
+        (row) => row.forEach((cell) => cell.addMarker("")) // Clear each cell's value
+      );
+
+      // Reset the active player to the first player
+      game.switchPlayerTurn(); // Ensure the turn starts with the first player
+      game.switchPlayerTurn(); // Switch twice to ensure Player One's turn
+
+      // Clear the result display
+      resultDiv.textContent = "";
+
+      // Update the screen
+      updateScreen();
+    });
 
     board.forEach((row, rowIndex) =>
       row.forEach((cell, columnIndex) => {
