@@ -27,9 +27,8 @@ const GameBoard = (function () {
   const getBoard = () => grid;
 
   const placeMarker = (row, column, player) => {
-    const boardValue = getBoard()[row][column].getValue();
+    const notValidMove = getBoard()[row][column].getValue() !== "";
 
-    let notValidMove = boardValue !== "";
     if (notValidMove) {
       console.log("Illegal move!!! Place your marker in an empty spot!");
     } else {
@@ -91,18 +90,119 @@ const GameController = function () {
     console.log(`${getActivePlayer().playerName}'s turn.`);
   };
 
+  const checkWin = () => {
+    const boardValues = gameBoard
+      .getBoard()
+      .map((row) => row.map((cell) => cell.getValue()));
+
+    // Check rows
+    for (let i = 0; i < 3; i++) {
+      if (
+        boardValues[i][0] !== "" &&
+        boardValues[i][0] === boardValues[i][1] &&
+        boardValues[i][1] === boardValues[i][2] &&
+        boardValues[i][2] === "X"
+      ) {
+        return `${players.getPlayers()[0].playerName} wins!`;
+      }
+    }
+    for (let i = 0; i < 3; i++) {
+      if (
+        boardValues[i][0] !== "" &&
+        boardValues[i][0] === boardValues[i][1] &&
+        boardValues[i][1] === boardValues[i][2] &&
+        boardValues[i][2] === "O"
+      ) {
+        return `${players.getPlayers()[1].playerName} wins!`;
+      }
+    }
+
+    // Check columns
+    for (let i = 0; i < 3; i++) {
+      if (
+        boardValues[0][i] !== "" &&
+        boardValues[0][i] === boardValues[1][i] &&
+        boardValues[1][i] === boardValues[2][i] &&
+        boardValues[2][i] === "X"
+      ) {
+        return `${players.getPlayers()[0].playerName} wins!`;
+      }
+    }
+    for (let i = 0; i < 3; i++) {
+      if (
+        boardValues[0][i] !== "" &&
+        boardValues[0][i] === boardValues[1][i] &&
+        boardValues[1][i] === boardValues[2][i] &&
+        boardValues[2][i] === "O"
+      ) {
+        return `${players.getPlayers()[1].playerName} wins!`;
+      }
+    }
+
+    // Check diagonals
+    if (
+      boardValues[0][0] !== "" &&
+      boardValues[0][0] === boardValues[1][1] &&
+      boardValues[1][1] === boardValues[2][2] &&
+      boardValues[2][2] === "X"
+    ) {
+      return `${players.getPlayers()[0].playerName} wins!`;
+    }
+    if (
+      boardValues[0][0] !== "" &&
+      boardValues[0][0] === boardValues[1][1] &&
+      boardValues[1][1] === boardValues[2][2] &&
+      boardValues[2][2] === "O"
+    ) {
+      return `${players.getPlayers()[1].playerName} wins!`;
+    }
+
+    if (
+      boardValues[0][2] !== "" &&
+      boardValues[0][2] === boardValues[1][1] &&
+      boardValues[1][1] === boardValues[2][0] &&
+      boardValues[2][0] === "X"
+    ) {
+      return `${players.getPlayers()[0].playerName} wins!`;
+    }
+    if (
+      boardValues[0][2] !== "" &&
+      boardValues[0][2] === boardValues[1][1] &&
+      boardValues[1][1] === boardValues[2][0] &&
+      boardValues[2][0] === "O"
+    ) {
+      return `${players.getPlayers()[1].playerName} wins!`;
+    }
+    const isBoardFull = () => {
+      return gameBoard
+        .getBoard()
+        .every((row) => row.every((cell) => cell.getValue() !== ""));
+    };
+    const status = isBoardFull();
+    if (status) {
+      return "TIE !!";
+    }
+
+    return;
+  };
+
   const playRound = (row, column) => {
     const marker = getActivePlayer().playerMarker;
     gameBoard.placeMarker(row, column, marker);
 
     // Add check win implementation here
+    const winner = checkWin();
+    if (winner) {
+      console.log(winner);
+      return; // Stop further actions if there's a winner
+    }
 
     printNewRound();
   };
 
   printNewRound();
 
-  return { playRound, getActivePlayer, switchPlayerTurn };
+  return { gameBoard, playRound, getActivePlayer, switchPlayerTurn };
 };
 
 const game = GameController();
