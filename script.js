@@ -48,7 +48,10 @@ const GameBoard = (function () {
 
 // Factory for creating players
 const Player = (function () {
-  let playerNames = ["Player One", "Player Two"];
+  let playerNames = [
+    prompt("Enter Player One's name:", "Player One"),
+    prompt("Enter Player Two's name:", "Player Two"),
+  ];
   let playerMarkers = ["X", "O"];
   const players = [];
 
@@ -71,6 +74,7 @@ const GameController = function () {
   const gameBoard = GameBoard;
 
   const players = Player;
+
   players.createPlayers();
 
   let activePlayer = players.getPlayers()[0];
