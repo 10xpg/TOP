@@ -27,12 +27,16 @@ const GameBoard = (function () {
   const getBoard = () => grid;
 
   const placeMarker = (row, column, player) => {
-    if (getBoard()[row][column].getValue() !== "") {
-      console.log("Invalid move! Place your marker in an empty spot!");
-      return `That players turn`;
+    const boardValue = getBoard()[row][column].getValue();
+
+    let notValidMove = boardValue !== "";
+    if (notValidMove) {
+      console.log("Illegal move!!! Place your marker in an empty spot!");
+    } else {
+      getBoard()[row][column].addMarker(player);
+      console.log(`${player}'s marker placed at (${row}, ${column})`);
+      game.switchPlayerTurn();
     }
-    getBoard()[row][column].addMarker(player);
-    console.log(`${player}'s marker placed at (${row}, ${column})`);
   };
 
   const printGameBoard = () => {
@@ -88,17 +92,17 @@ const GameController = function () {
   };
 
   const playRound = (row, column) => {
-    gameBoard.placeMarker(row, column, getActivePlayer().playerMarker);
+    const marker = getActivePlayer().playerMarker;
+    gameBoard.placeMarker(row, column, marker);
 
     // Add check win implementation here
 
-    switchPlayerTurn();
     printNewRound();
   };
 
   printNewRound();
 
-  return { playRound, getActivePlayer };
+  return { playRound, getActivePlayer, switchPlayerTurn };
 };
 
 const game = GameController();
