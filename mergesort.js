@@ -1,7 +1,7 @@
-// const input = [2, 8, 15, 18, 4, 5, 6, 9, 12, 17];
+const input = [2, 8, 15, 18, 20, 5, 6, 9, 12, 17];
 
-// const front = input.slice(0, Math.floor(input.length / 2));
-// const end = input.slice(Math.floor(input.length / 2), input.length);
+const front = input.slice(0, Math.floor(input.length / 2));
+const end = input.slice(Math.floor(input.length / 2), input.length);
 
 function merge(front, end) {
   let res = [];
@@ -43,11 +43,13 @@ function mergeSort(array) {
       let leftHalf = array.slice(lowerIndex, mid);
       let rightHalf = array.slice(mid, higherIndex + 1);
 
-      mergeSort(leftHalf);
-      mergeSort(rightHalf);
-      return merge(leftHalf, rightHalf);
+      let sortedLeft = mergeSort(leftHalf);
+      let sortedRight = mergeSort(rightHalf);
+
+      return merge(sortedLeft, sortedRight);
     }
   }
 }
 
 console.log(mergeSort(test));
+// console.log(merge([2, 3], [4, 5]));
