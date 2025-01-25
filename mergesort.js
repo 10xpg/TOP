@@ -45,7 +45,7 @@ function mergeSort(array) {
 
       mergeSort(leftHalf);
       mergeSort(rightHalf);
-      merge(leftHalf, rightHalf);
+      return merge(leftHalf, rightHalf);
     }
   }
 }
