@@ -89,11 +89,13 @@ class LinkedList {
   // TODO: at(index)
   at(index) {
     let current = this.start;
-    if (current == null) {
+    if (current === null) {
       return null;
     } else {
       if (index === 0) {
         return current;
+      } else if (index < 0) {
+        return undefined;
       } else {
         for (let i = 1; i <= index; i++) {
           current = current.nextNode;
@@ -153,6 +155,27 @@ class LinkedList {
       return result;
     }
   }
+
+  // TODO: insertAt(value,index)
+  insertAt(value, index) {
+    let result = this.at(index);
+    let beforeResult = this.at(index - 1);
+    let node = new Node(value, result);
+    beforeResult.nextNode = node;
+  }
+
+  // TODO: removeAt(index)
+  removeAt(index) {
+    let currentNode = this.at(index);
+    let previousNode = this.at(index - 1);
+    let nextNode = this.at(index + 1);
+    if (previousNode === undefined) {
+      currentNode.nextNode = null;
+      this.start = nextNode;
+    } else {
+      previousNode.nextNode = nextNode;
+    }
+  }
 }
 
 const list = new LinkedList();
@@ -163,4 +186,10 @@ list.append("parrot");
 list.append("hamster");
 list.append("snake");
 list.append("turtle");
+list.append("cow");
+
+console.log(list.toString());
+console.log(list.size());
+// console.log(list.at(6));
+list.removeAt(0);
 console.log(list.toString());
