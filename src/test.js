@@ -1,4 +1,5 @@
 import { HashMap } from './hashmap.js'
+import { HashSet } from './hashset.js'
 
 const test = new HashMap(0.75)
 
@@ -18,4 +19,8 @@ test.set('lion', 'golden')
 test.set('lion', 'yellow')
 test.set('moon', 'silver')
 // test.set('sun', 'silver')
-console.log(test.entries().length)
+// console.log(test.entries().length)
+console.log(test.entries())
+// console.log(test.keys())
+// test.remove('elephant')
+// test.remove('moon')

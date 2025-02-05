@@ -1,12 +1,11 @@
 class Node {
-  constructor(key = null, value = null, next = null) {
+  constructor(key = null, next = null) {
     this.key = key
-    this.value = value
     this.next = next
   }
 }
 
-class HashMap {
+class HashSet {
   constructor(loadFactor, capacity = 16) {
     this.loadFactor = loadFactor
     this.capacity = capacity
@@ -26,7 +25,6 @@ class HashMap {
 
   grow() {
     const numberOfEntries = this.entries().length
-    console.log(numberOfEntries)
     if (numberOfEntries > this.capacity * this.loadFactor) {
       const oldStorage = this.storage
       this.capacity = this.capacity * 2
@@ -47,8 +45,7 @@ class HashMap {
     }
   }
 
-  set(key, value) {
-    this.grow()
+  set(key) {
     const index = this.hash(key)
 
     if (index < 0 || index >= this.storage.length) {
@@ -56,18 +53,17 @@ class HashMap {
     }
 
     let currentNode = this.storage[index]
+    this.grow()
 
     if (currentNode.key === null) {
       currentNode.key = key
-      currentNode.value = value
     } else {
       while (currentNode) {
         if (currentNode.key === key) {
-          currentNode.value = value
           return
         }
         if (currentNode.next === null) {
-          currentNode.next = new Node(key, value)
+          currentNode.next = new Node(key)
           return
         }
         currentNode = currentNode.next
@@ -85,7 +81,7 @@ class HashMap {
     let currentNode = this.storage[index]
     while (currentNode) {
       if (currentNode.key === key) {
-        return currentNode.value
+        return currentNode.key
       }
       currentNode = currentNode.next
     }
@@ -120,14 +116,14 @@ class HashMap {
     while (currentNode) {
       if (currentNode.key === key && !currentNode.next && !previousNode) {
         currentNode.key = null
-        currentNode.value = null
+
         return true
       } else if (currentNode.key === key && currentNode.next === null) {
         previousNode.next = null
         return true
       } else if (currentNode.key === key && currentNode.next) {
         currentNode.key = currentNode.next.key
-        currentNode.value = currentNode.next.value
+
         currentNode.next = currentNode.next.next
         return true
       }
@@ -176,7 +172,7 @@ class HashMap {
     this.storage.forEach((item) => {
       let currentNode = item
       while (currentNode && currentNode.key) {
-        result.push(currentNode.value)
+        result.push(currentNode.key)
         currentNode = currentNode.next
       }
     })
@@ -188,7 +184,7 @@ class HashMap {
     this.storage.forEach((item) => {
       let currentNode = item
       while (currentNode && currentNode.key) {
-        result.push([currentNode.key, currentNode.value])
+        result.push([currentNode.key])
         currentNode = currentNode.next
       }
     })
@@ -196,22 +192,4 @@ class HashMap {
   }
 }
 
-export { HashMap }
-
-// const hash = new HashMap(0.8, 8)
-// console.log(hash.storage)
-// hash.set('Carlos', 'I am the old value')
-// // hash.set('Carlos', 'I am the new value')
-// hash.set('Rama', 'I am the new value')
-// hash.set('Sita', 'I am the baby')
-// hash.set('prince', 'delali')
-// hash.set('rince', 'gbezeh')
-// hash.set('aaa', 'yayy')
-// hash.set('bc', 'nah')
-// hash.set('ab', 'nah')
-// console.log(hash.storage)
-// console.log(hash.length())
-// // console.log(hash.remove('Carlos'))
-// // console.log(hash.clear())
-// console.log(hash.entries().length)
-// // console.log(hash.storage)
+export { HashSet }
