@@ -1,1 +1,1 @@
-console.log('It works!')
+import { test } from './test.js'
