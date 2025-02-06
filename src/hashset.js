@@ -53,10 +53,10 @@ class HashSet {
     }
 
     let currentNode = this.storage[index]
-    this.grow()
 
     if (currentNode.key === null) {
       currentNode.key = key
+      this.grow()
     } else {
       while (currentNode) {
         if (currentNode.key === key) {
@@ -64,6 +64,7 @@ class HashSet {
         }
         if (currentNode.next === null) {
           currentNode.next = new Node(key)
+          this.grow()
           return
         }
         currentNode = currentNode.next

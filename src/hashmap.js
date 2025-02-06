@@ -26,10 +26,11 @@ class HashMap {
 
   grow() {
     const numberOfEntries = this.entries().length
-    console.log(numberOfEntries)
+    console.log(this.capacity)
     if (numberOfEntries > this.capacity * this.loadFactor) {
       const oldStorage = this.storage
       this.capacity = this.capacity * 2
+      console.log(this.capacity)
 
       // Create new empty storage
       this.storage = Array(this.capacity)
@@ -48,7 +49,6 @@ class HashMap {
   }
 
   set(key, value) {
-    this.grow()
     const index = this.hash(key)
 
     if (index < 0 || index >= this.storage.length) {
@@ -60,6 +60,7 @@ class HashMap {
     if (currentNode.key === null) {
       currentNode.key = key
       currentNode.value = value
+      this.grow()
     } else {
       while (currentNode) {
         if (currentNode.key === key) {
@@ -68,6 +69,7 @@ class HashMap {
         }
         if (currentNode.next === null) {
           currentNode.next = new Node(key, value)
+          this.grow()
           return
         }
         currentNode = currentNode.next
