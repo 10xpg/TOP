@@ -1,1 +1,1 @@
-# webpack-starter template
+# Battleship
