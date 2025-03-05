@@ -1,1 +1,1 @@
-console.log('It works!')
+import { Ship } from './ship/ship'
