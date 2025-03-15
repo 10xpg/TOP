@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { General, Education, Experience } from ".";
+import { General, Education, Experience, CV } from ".";
 import { Button } from "./buttons";
 
 export const Form = function () {
@@ -32,9 +32,14 @@ export const Form = function () {
     setIsSubmitted(true);
   };
 
+  const handleClick = (e) => {
+    e.target.value;
+    setIsSubmitted(false);
+  };
+
   if (isSubmitted) {
     // TODO: proper rendering of submitted form in HTML
-    return <h1>Sent!</h1>;
+    return <CV info={info} onClick={handleClick} />;
   }
 
   return (

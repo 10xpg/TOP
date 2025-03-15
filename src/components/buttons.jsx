@@ -1,3 +1,7 @@
-export const Button = function ({ text }) {
-  return <button type="">{text}</button>;
+export const Button = function ({ text, type, onClick }) {
+  return (
+    <button type={type} onClick={onClick}>
+      {text}
+    </button>
+  );
 };
