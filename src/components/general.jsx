@@ -3,7 +3,9 @@ import { Input } from "./fields";
 export const General = function ({ info, handleChange }) {
   return (
     <fieldset>
-      <legend>General Information</legend>
+      <legend>
+        <h2>General Information</h2>
+      </legend>
       <Input
         label={"First Name"}
         htmlFor={"firstName"}

@@ -3,7 +3,9 @@ import { Input, TextArea } from "./fields";
 export const Experience = function ({ info, handleChange }) {
   return (
     <fieldset>
-      <legend>Practical Experience</legend>
+      <legend>
+        <h2> Practical Experience</h2>
+      </legend>
       <Input
         label={"Company Name"}
         htmlFor={"companyName"}

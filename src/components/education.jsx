@@ -3,7 +3,9 @@ import { Input } from "./fields";
 export const Education = function ({ info, handleChange }) {
   return (
     <fieldset>
-      <legend>Educational Experience</legend>
+      <legend>
+        <h2>Educational Experience</h2>
+      </legend>
       <Input
         label={"School Name"}
         htmlFor={"schoolName"}

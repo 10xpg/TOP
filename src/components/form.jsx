@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { General, Education, Experience, CV } from ".";
 import { Button } from "./buttons";
+import "../styles/styles.css";
 
 export const Form = function () {
   const initialInfo = {
@@ -38,12 +39,12 @@ export const Form = function () {
   };
 
   if (isSubmitted) {
-    // TODO: proper rendering of submitted form in HTML
     return <CV info={info} onClick={handleClick} />;
   }
 
   return (
     <form onSubmit={handleSubmit} method="POST">
+      <h1>CV Builder</h1>
       <General info={info} handleChange={handleChange} />
       <Education info={info} handleChange={handleChange} />
       <Experience info={info} handleChange={handleChange} />
