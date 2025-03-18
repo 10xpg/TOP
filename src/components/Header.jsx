@@ -1,6 +1,6 @@
 const Header = () => {
-  //TODO: name of game
-  //TODO: how to play
+  // // TODO: name of game
+  // // TODO: how to play
 
   return (
     <header>
@@ -9,7 +9,7 @@ const Header = () => {
         <h2>Rules</h2>
         <ul>
           <li>remember the selected card!</li>
-          <li>select a selected card more than once - You crash!</li>
+          <li>select a selected card consecutively - You crash!</li>
         </ul>
       </div>
     </header>

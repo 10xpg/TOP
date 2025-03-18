@@ -3,17 +3,23 @@ import { useEffect, useState } from "react";
 const Card = ({ text, imageUrl, onClick }) => {
   return (
     <li>
-      <button onClick={onClick}>
-        <img src={imageUrl} alt="" />
+      <span>
+        <img
+          src={imageUrl}
+          alt={text}
+          onClick={onClick}
+          width="300px"
+          height="auto"
+        />
         <div>{text}</div>
-      </button>
+      </span>
     </li>
   );
 };
 
-const Cards = ({ setScore, setHighScore }) => {
+const Cards = ({ setScore, setHighScore, currentScore }) => {
   const [data, setData] = useState([]);
-  const [selectedCard, setSelectedCard] = useState(false);
+  const [selectedCard, setSelectedCard] = useState("");
 
   useEffect(() => {
     fetch(
@@ -25,35 +31,38 @@ const Cards = ({ setScore, setHighScore }) => {
         setData(data.data);
       });
   }, []);
-  console.log("logging data:", data);
+  //   console.log("logging data:", data);
 
-  const handleClick = () => {
-    setSelectedCard(!selectedCard);
-    setScore((prevScore) => prevScore + 1);
-  };
   return (
     <ul>
-      {data.map((obj) => (
+      {shuffle(data).map((obj) => (
         <Card
           key={obj.id}
           text={obj.title}
           imageUrl={obj.images.original.url}
-          onClick={handleClick}
+          onClick={(e) => {
+            if (obj.title !== selectedCard) {
+              setSelectedCard(e.target.alt);
+              // console.log(e.target.alt);
+              setScore((prevScore) => prevScore + 1);
+            }
+            if (obj.title === selectedCard) {
+              setHighScore(currentScore);
+              setScore(0);
+            }
+          }}
         />
       ))}
     </ul>
   );
 };
 
-//TODO: score board
-//TODO: highscore board
 const Playground = () => {
   const [currentScore, setCurrentScore] = useState(0);
   const [highestScore, setHighestScore] = useState(0);
 
-  // * interface for game play
   // // TODO: render cards
-  // TODO: make cards clickable (update score on click)
+  // // TODO: make cards clickable (update score on click)
   // TODO: reshuffle cards onMount and reRenders
 
   return (
@@ -63,9 +72,32 @@ const Playground = () => {
         <div>Highest Score: {highestScore}</div>
         <div>Current Score: {currentScore}</div>
       </section>
-      <Cards setScore={setCurrentScore} setHighScore={setHighestScore} />
+      <Cards
+        currentScore={currentScore}
+        setScore={setCurrentScore}
+        setHighScore={setHighestScore}
+      />
     </main>
   );
 };
 
 export { Playground };
+
+//utility function
+function shuffle(array) {
+  let currentIndex = array.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+  return array;
+}
