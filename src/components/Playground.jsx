@@ -34,7 +34,7 @@ const Cards = ({ setScore, setHighScore, currentScore }) => {
   //   console.log("logging data:", data);
 
   return (
-    <ul>
+    <ul className="grid-container">
       {shuffle(data).map((obj) => (
         <Card
           key={obj.id}

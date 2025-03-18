@@ -1,0 +1,6 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  grid-auto-rows: minmax(100px, auto); /* Flexible rows */
+  gap: 10px;
+}
