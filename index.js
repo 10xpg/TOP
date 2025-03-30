@@ -4,8 +4,20 @@ const path = require("path");
 
 const server = http.createServer((req, res) => {
   // build the filePath
-  let filePath = path.join(__dirname, req.url === "/" ? "index.html" : req.url);
+  let filePath = "";
+
+  if (req.url === "/") {
+    filePath = path.join(__dirname, "index.html");
+  }
+  if (req.url === "/about") {
+    filePath = path.join(__dirname, "about.html");
+  }
+  if (req.url === "/contact-me") {
+    filePath = path.join(__dirname, "contact-me.html");
+  }
+
   console.log(filePath);
+  console.log(req.url);
 
   //read file
   fs.readFile(filePath, (err, data) => {
