@@ -11,10 +11,11 @@
       <a href="/new">Add a post</a>
     </div>
     <div>
-      <% messages.map((msg) => { %>
+      <% messages.map((msg,index) => { %>
       <h2><%= msg.user %></h2>
       <section><%= msg.text %></section>
       <strong><%= msg.added %></strong>
+      <a href=/new/<%= index %> >open</a>
       <% })%>
     </div>
   </body>

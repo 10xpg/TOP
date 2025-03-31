@@ -10,4 +10,11 @@ const getFormData = (req, res) => {
   res.redirect("/");
 };
 
-module.exports = { getForm, getFormData };
+const getDetailPage = (req, res) => {
+  res.render("detail", {
+    title: "Mini Messageboard Detail",
+    id: req.params.detailId,
+    messages,
+  });
+};
+module.exports = { getForm, getFormData, getDetailPage };
