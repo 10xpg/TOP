@@ -1,20 +1,21 @@
-const { messages } = require("./index");
+const db = require("../db/queries");
 
 const getForm = (req, res) => {
   res.render("form", { title: "Mini Messageboard" });
 };
 
-const getFormData = (req, res) => {
+const getFormData = async (req, res) => {
   const { authorName, message } = req.body;
-  messages.push({ text: message, user: authorName, added: new Date() });
+  await db.addMessage(message, authorName);
   res.redirect("/");
 };
 
-const getDetailPage = (req, res) => {
+const getDetailPage = async (req, res) => {
   res.render("detail", {
     title: "Mini Messageboard Detail",
     id: req.params.detailId,
-    messages,
+    messages: await db.getMessage(req.params.detailId),
   });
 };
+
 module.exports = { getForm, getFormData, getDetailPage };
