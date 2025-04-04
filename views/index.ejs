@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Inventory</title>
+  </head>
+  <body>
+    <%- include('header'); -%>
+    <div class="hero">
+      <div class="message">
+        <h1>Welcome to pg-Store!</h1>
+        <h2>Please find the Inventory of items below</h2>
+      </div>
+      <div class="categories">
+        <h1>Inventory Category</h1>
+        <nav>
+          <% if (locals.categories){ %> <%categories.map((category)=>{%>
+          <button><%=category.category %></button>
+          <% })%> <% }%>
+        </nav>
+      </div>
+    </div>
+    <% if (locals.products){ %>
+    <div class="products-container">
+      <%products.map((product)=>{%>
+      <div class="product-card">
+        <div class="product-name"><%= product.name %></div>
+        <div class="description">Description: <%= product.description %></div>
+        <div class="price">Price: gh¢<%= product.price %></div>
+        <img
+          class="product-image"
+          src="<%= product.imageurl  %>"
+          alt="<%= product.name %>"
+        />
+        <div class="quantity">Qty in stock: <%= product.amount %></div>
+      </div>
+      <% }) %> <% }%>
+    </div>
+    <%- include('footer'); -%>
+  </body>
+</html>
