@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="domStuff.js" type="module" defer></script>
+    <link rel="stylesheet" href="styles.css" />
+    <title>Inventory | Add Product</title>
+  </head>
+  <body>
+    <%- include('../header'); -%>
+    <div class="hero">
+      <div class="message">
+        <h1>Welcome to 🛒 pg-Store!</h1>
+        <h2>Fill the form below to add a Product</h2>
+      </div>
+      <div class="form">
+        <h1>Add a Product</h1>
+        <form action="" method="get">
+          <label for="category">Category: </label>
+          <input type="text" name="category" />
+          <button type="submit">Add</button>
+        </form>
+      </div>
+    </div>
+    <%- include('../footer'); -%>
+  </body>
+</html>

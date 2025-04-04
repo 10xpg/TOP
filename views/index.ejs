@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="domStuff.js" type="module" defer></script>
     <link rel="stylesheet" href="styles.css" />
     <title>Inventory</title>
   </head>
@@ -10,14 +11,15 @@
     <%- include('header'); -%>
     <div class="hero">
       <div class="message">
-        <h1>Welcome to pg-Store!</h1>
+        <h1>Welcome to 🛒 pg-Store!</h1>
         <h2>Please find the Inventory of items below</h2>
       </div>
       <div class="categories">
         <h1>Inventory Category</h1>
         <nav>
+          <button class="all">all</button>
           <% if (locals.categories){ %> <%categories.map((category)=>{%>
-          <button><%=category.category %></button>
+          <button class="category"><%=category.category %></button>
           <% })%> <% }%>
         </nav>
       </div>

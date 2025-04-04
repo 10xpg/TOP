@@ -9,6 +9,10 @@ nav button {
 }
 
 .header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: x-large;
@@ -16,6 +20,18 @@ nav button {
   font-weight: bolder;
   text-align: center;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.home {
+  text-decoration: none;
+  color: black;
+}
+
+.links {
+  font-size: medium;
+  display: flex;
+  gap: 50px;
+  justify-content: end;
 }
 
 .hero {
@@ -55,7 +71,7 @@ nav button {
   border-radius: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
-  /* transition: transform 0.2s ease-in-out; */
+  transition: transform 0.2s ease-in-out;
 }
 
 .product-name {
