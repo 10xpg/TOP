@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="domStuff.js" type="module" defer></script>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/styles.css" />
     <title>Inventory | Add Category</title>
   </head>
   <body>
-    <%- include('../header'); -%>
+    <%- include('../header') %>
     <div class="hero">
       <div class="message">
         <h1>Welcome to 🛒 pg-Store!</h1>
@@ -18,11 +18,11 @@
         <h1>Add a Category</h1>
         <form action="" method="get">
           <label for="category">Category: </label>
-          <input type="text" name="category" />
+          <input type="text" name="category" id="category" />
           <button type="submit">Add</button>
         </form>
       </div>
     </div>
-    <%- include('../footer'); -%>
+    <%- include('../footer')%>
   </body>
 </html>

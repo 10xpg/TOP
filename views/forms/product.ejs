@@ -3,12 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="domStuff.js" type="module" defer></script>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/styles.css" />
     <title>Inventory | Add Product</title>
   </head>
   <body>
-    <%- include('../header'); -%>
+    <%-include('../header')%>
     <div class="hero">
       <div class="message">
         <h1>Welcome to 🛒 pg-Store!</h1>
@@ -18,11 +17,34 @@
         <h1>Add a Product</h1>
         <form action="" method="get">
           <label for="category">Category: </label>
-          <input type="text" name="category" />
-          <button type="submit">Add</button>
+          <select id="category" name="category">
+            <option value="">--Select a category--</option>
+            <%if(locals.categories){%> <%categories.map((category) => {%>
+            <option value="<%= category.category %>">
+              <%= category.category %>
+            </option>
+            <%})%> <%}%>
+          </select>
+
+          <label for="product">Product: </label>
+          <input type="text" name="prduct" id="product" />
+
+          <label for="description">Description: </label>
+          <input type="text" name="description" id="description" />
+
+          <label for="price">Price: </label>
+          <input type="number" name="price" id="price" />
+
+          <label for="image">Image: </label>
+          <input type="text" name="image" id="image" />
+
+          <label for="quantity">Quantity: </label>
+          <input type="tel" name="quantity" id="quantity" />
+
+          <input type="submit" />
         </form>
       </div>
     </div>
-    <%- include('../footer'); -%>
+    <%-include('../footer')%>
   </body>
 </html>

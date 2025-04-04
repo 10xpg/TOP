@@ -1,9 +1,13 @@
 const { Router } = require("express");
-const { addCategoryGet, addProductGet } = require("../controllers/forms");
+const {
+  addCategoryGet,
+  addProductGet,
+  allCategoriesGet,
+} = require("../controllers/forms");
 
 const router = Router();
 
 router.get("/category", addCategoryGet);
-router.get("/product", addProductGet);
+router.get("/product", [allCategoriesGet, addProductGet]);
 
 module.exports = router;
