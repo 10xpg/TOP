@@ -22,8 +22,10 @@ app.use("/form", formRouter);
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT} ...`));
 
 // // TODO 1: add eventhandler that returns a list of products specific to the Category button? like passing selected category to db query?
-// TODO 2: add form where visitors can add to inventory .ie. both category and products
+// // TODO 2: add form where visitors can add to inventory .ie. both category and products
+// TODO 2: and form validation & error handlers
 // TODO 3: implement delete for category and products
 // TODO 4: implement update for category and products
 // TODO 5: implement update for category and products
 // TODO 6: protect UPDATE and DELETE endpoints
+// TODO 7: add style to category buttons on home

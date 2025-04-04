@@ -16,9 +16,16 @@
       </div>
       <div class="form">
         <h1>Add a Category</h1>
+        <%- include('../partials/error') %>
         <form action="" method="get">
           <label for="category">Category: </label>
-          <input type="text" name="category" id="category" />
+          <input
+            type="text"
+            name="category"
+            id="category"
+            required
+            minlength="1"
+          />
           <button type="submit">Add</button>
         </form>
       </div>

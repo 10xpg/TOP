@@ -26,7 +26,22 @@ const createCategory = async (category) => {
   await pool.query("INSERT INTO category (category) VALUES ($1)", [category]);
 };
 
-const addProductToCategory = async () => {};
+const addProductToCategory = async (
+  category,
+  name,
+  description,
+  price,
+  image,
+  quantity
+) => {
+  await pool.query(
+    `
+    INSERT INTO product (category_id, name, description, price, imageUrl, amount) VALUES
+    ((SELECT id FROM category WHERE category = ($1)),($2),($3),($4),($5),($6))
+    `,
+    [category, name, description, price, image, quantity]
+  );
+};
 
 module.exports = {
   getAllProducts,
