@@ -43,6 +43,15 @@ const addProductToCategory = async (
   );
 };
 
+const editCategory = async (newValue, id) => {
+  await pool.query("UPDATE category SET category = ($1) WHERE id = ($2) ", [
+    newValue,
+    id,
+  ]);
+};
+
+const editProduct = () => {};
+
 module.exports = {
   getAllProducts,
   getCategoryList,

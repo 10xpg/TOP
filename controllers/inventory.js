@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 
 const allCategoriesGet = asyncHandler(async (req, res, next) => {
   req.categories = await db.getCategoryList();
-  // console.log("Categories: ", req.categories);
+  console.log("Categories: ", req.categories);
   next();
 });
 

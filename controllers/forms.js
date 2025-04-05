@@ -12,6 +12,23 @@ const allCategoriesGet = async (req, res, next) => {
 
 // -> Validators
 const validateCategoryInput = [
+  (req, res, next) => {
+    if (!req.query.category) return next(); // skip if no input
+    next();
+  },
+  query("category")
+    .toLowerCase()
+    .notEmpty()
+    .withMessage("Field cannot be left empty")
+    .isLength({ min: 1, max: 255 })
+    .withMessage('Character Length : min -> "1", max -> "255"'),
+];
+
+const validateProductInput = [
+  (req, res, next) => {
+    if (!req.query.category) return next(); // skip if no input
+    next();
+  },
   query("category")
     .toLowerCase()
     .notEmpty()
@@ -46,35 +63,37 @@ const validateCategoryInput = [
 ];
 
 // -> Routes
-const addCategoryGet = asyncHandler([
+const addCategoryGet = [
   validateCategoryInput,
-  async (req, res) => {
+  asyncHandler(async (req, res) => {
+    if (!req.query.category) {
+      return res.render("forms/category");
+    }
     const errors = validationResult(req);
+    console.log(errors);
     if (!errors.isEmpty()) {
       return res.status(400).render("forms/category", {
         errors: errors.array(),
       });
     }
-    if (!req.query.category) {
-      return res.render("forms/category");
-    }
     const { category } = req.query;
     await db.createCategory(category);
     console.log("Added to category: ", category);
     res.redirect("/");
-  },
-]);
+  }),
+];
 
-const addProductGet = asyncHandler([
-  async (req, res) => {
+const addProductGet = [
+  validateProductInput,
+  asyncHandler(async (req, res) => {
+    if (!req.query.category) {
+      return res.render("forms/product", { categories: req.categories });
+    }
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).render("forms/product", {
         errors: errors.array(),
       });
-    }
-    if (!req.query.category) {
-      return res.render("forms/product", { categories: req.categories });
     }
     const { category, product, description, price, image, quantity } =
       req.query;
@@ -87,7 +106,7 @@ const addProductGet = asyncHandler([
       quantity
     );
     res.redirect("/");
-  },
-]);
+  }),
+];
 
 module.exports = { allCategoriesGet, addCategoryGet, addProductGet };
