@@ -25,7 +25,7 @@ app.listen(PORT, () => console.log(`Server listening on port: ${PORT} ...`));
 // // TODO 2: add form where visitors can add to inventory .ie. both category and products
 // // TODO 2: and form validation & error handlers
 // // TODO 4: implement update for category and products
-// TODO 3: implement delete for category and products
+// // TODO 3: implement delete for category and products
 // TODO 3: add way to link delete for category and products
 // TODO 3: add way to link update for category and products
 // TODO 6: protect UPDATE and DELETE endpoints

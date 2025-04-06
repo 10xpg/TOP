@@ -98,6 +98,14 @@ const editProduct = async (
   );
 };
 
+const deleteCategory = async (categoryId) => {
+  await pool.query("DELETE FROM category WHERE id = ($1)", [categoryId]);
+};
+
+const deleteProduct = async (productId) => {
+  await pool.query("DELETE FROM product WHERE id = ($1)", [productId]);
+};
+
 module.exports = {
   getAllProducts,
   getCategoryList,
@@ -108,4 +116,6 @@ module.exports = {
   addProductToCategory,
   editCategory,
   editProduct,
+  deleteCategory,
+  deleteProduct,
 };

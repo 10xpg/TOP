@@ -178,10 +178,21 @@ const updateProductGet = [
   }),
 ];
 
+const deleteCategoryGet = asyncHandler(async (req, res) => {
+  await db.deleteCategory(req.params.id);
+  res.redirect("/");
+});
+const deleteProductGet = asyncHandler(async (req, res) => {
+  await db.deleteProduct(req.params.id);
+  res.redirect("/");
+});
+
 module.exports = {
   allCategoriesGet,
   addCategoryGet,
   addProductGet,
   updateCategoryGet,
   updateProductGet,
+  deleteCategoryGet,
+  deleteProductGet,
 };
