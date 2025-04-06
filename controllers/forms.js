@@ -49,8 +49,8 @@ const validateProductInput = [
   query("price")
     .notEmpty()
     .withMessage("Field cannot be left empty")
-    .isLength({ min: 1, max: 4 })
-    .withMessage('Character Length : min -> "1", max -> "4"')
+    .isLength({ min: 1, max: 5 })
+    .withMessage('Character Length : min -> "1", max -> "5"')
     .isNumeric()
     .withMessage("Value must be a number"),
   ,

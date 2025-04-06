@@ -67,7 +67,7 @@ const addProductToCategory = async (
 
 const editCategory = async (newCategoryValue, id) => {
   await pool.query("UPDATE category SET category = ($1) WHERE id = ($2) ", [
-    newValue,
+    newCategoryValue,
     id,
   ]);
 };

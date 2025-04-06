@@ -26,7 +26,7 @@ app.listen(PORT, () => console.log(`Server listening on port: ${PORT} ...`));
 // // TODO 2: and form validation & error handlers
 // // TODO 4: implement update for category and products
 // // TODO 3: implement delete for category and products
-// TODO 3: add way to link delete for category and products
-// TODO 3: add way to link update for category and products
+// // TODO 3: add way to link delete and update for products
+// // TODO 3: add way to link delete and update for category
 // TODO 6: protect UPDATE and DELETE endpoints
-// TODO 7: add style to category buttons on home
+// // TODO 7: add style to category buttons on home
