@@ -67,12 +67,12 @@ const addCategoryGet = [
   validateCategoryInput,
   asyncHandler(async (req, res) => {
     if (!req.query.category) {
-      return res.render("forms/category");
+      return res.render("forms/addCategory");
     }
     const errors = validationResult(req);
     console.log(errors);
     if (!errors.isEmpty()) {
-      return res.status(400).render("forms/category", {
+      return res.status(400).render("forms/addCategory", {
         errors: errors.array(),
       });
     }
@@ -87,11 +87,11 @@ const addProductGet = [
   validateProductInput,
   asyncHandler(async (req, res) => {
     if (!req.query.category) {
-      return res.render("forms/product", { categories: req.categories });
+      return res.render("forms/addProduct", { categories: req.categories });
     }
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).render("forms/product", {
+      return res.status(400).render("forms/addProduct", {
         errors: errors.array(),
       });
     }
@@ -109,4 +109,79 @@ const addProductGet = [
   }),
 ];
 
-module.exports = { allCategoriesGet, addCategoryGet, addProductGet };
+const updateCategoryGet = [
+  validateCategoryInput,
+  asyncHandler(async (req, res) => {
+    console.log("param: ", req.params.id);
+    const selectedCategory = await db.getCategory(req.params.id);
+    const categoryId = selectedCategory[0].id;
+
+    if (!req.query.category) {
+      return res.render("forms/updateCategory", {
+        category: selectedCategory[0].category,
+      });
+    }
+
+    const errors = validationResult(req);
+    console.log(errors);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("forms/updateCategory", {
+        errors: errors.array(),
+      });
+    }
+
+    const { category } = req.query; // the new value
+
+    await db.editCategory(category, categoryId);
+    console.log("Update to category: ", category);
+    res.redirect("/");
+  }),
+];
+
+const updateProductGet = [
+  validateCategoryInput,
+  asyncHandler(async (req, res) => {
+    console.log("param: ", req.params.id);
+    const selectedProduct = await db.getProduct(req.params.id);
+    console.log("selectedProduct: ", selectedProduct);
+    const productId = selectedProduct[0].id;
+
+    if (!req.query.category) {
+      return res.render("forms/updateProduct", {
+        categories: req.categories,
+        selectedProduct,
+      });
+    }
+
+    const errors = validationResult(req);
+    console.log(errors);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("forms/updateProduct", {
+        errors: errors.array(),
+      });
+    }
+
+    const { category, product, description, price, image, quantity } =
+      req.query;
+
+    await db.editProduct(
+      productId,
+      category,
+      product,
+      description,
+      price,
+      image,
+      quantity
+    );
+    console.log("Update to category: ", category);
+    res.redirect("/");
+  }),
+];
+
+module.exports = {
+  allCategoriesGet,
+  addCategoryGet,
+  addProductGet,
+  updateCategoryGet,
+  updateProductGet,
+};

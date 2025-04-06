@@ -10,7 +10,7 @@ const getCategoryList = async () => {
   return rows;
 };
 
-const getCategory = async (category) => {
+const getAllCategory = async (category) => {
   const { rows } = await pool.query(
     `
     SELECT * FROM category
@@ -18,6 +18,28 @@ const getCategory = async (category) => {
     WHERE category = ($1)
     `,
     [category]
+  );
+  return rows;
+};
+
+const getCategory = async (id) => {
+  const { rows } = await pool.query(
+    `
+    SELECT * FROM category
+    WHERE id = ($1)
+    `,
+    [id]
+  );
+  return rows;
+};
+
+const getProduct = async (id) => {
+  const { rows } = await pool.query(
+    `
+    SELECT * FROM product
+    WHERE id = ($1)
+    `,
+    [id]
   );
   return rows;
 };
@@ -43,19 +65,47 @@ const addProductToCategory = async (
   );
 };
 
-const editCategory = async (newValue, id) => {
+const editCategory = async (newCategoryValue, id) => {
   await pool.query("UPDATE category SET category = ($1) WHERE id = ($2) ", [
     newValue,
     id,
   ]);
 };
 
-const editProduct = () => {};
+const editProduct = async (
+  id,
+  newCategoryId,
+  newProductVal,
+  newDescriptionVal,
+  newPriceVal,
+  newImageVal,
+  newQtyVal
+) => {
+  await pool.query(
+    `
+    UPDATE product SET category_id = ($2), name = ($3), description = ($4), price = ($5), imageurl = ($6), amount = ($7)
+    WHERE id = ($1)
+    `,
+    [
+      id,
+      newCategoryId,
+      newProductVal,
+      newDescriptionVal,
+      newPriceVal,
+      newImageVal,
+      newQtyVal,
+    ]
+  );
+};
 
 module.exports = {
   getAllProducts,
   getCategoryList,
+  getAllCategory,
   getCategory,
+  getProduct,
   createCategory,
   addProductToCategory,
+  editCategory,
+  editProduct,
 };

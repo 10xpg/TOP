@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>Inventory | Update Product</title>
+  </head>
+  <body>
+    <%-include('../header')%>
+    <div class="hero">
+      <div class="message">
+        <h1>Welcome to 🛒 pg-Store!</h1>
+        <h2>Update the form below to edit a Product</h2>
+      </div>
+      <div class="form">
+        <h1>Edit a Product</h1>
+        <%- include('../partials/error') %>
+        <form action="" method="get">
+          <label for="category">Category: </label>
+          <select id="category" name="category" required>
+            <option value="">--Select a category--</option>
+            <%if(locals.categories){%> <%categories.map((category) => {%>
+            <option value="<%= category.id %>"><%= category.category %></option>
+            <%})%> <%}%>
+          </select>
+
+          <label for="product">Product: </label>
+          <input
+            type="text"
+            name="product"
+            id="product"
+            value="<%= selectedProduct[0].name %>"
+            required
+          />
+
+          <label for="description">Description: </label>
+          <input
+            type="text"
+            name="description"
+            id="description"
+            value="<%= selectedProduct[0].description %>"
+            required
+          />
+
+          <label for="price">Price: </label>
+          <input
+            type="text"
+            name="price"
+            id="price"
+            value="<%= selectedProduct[0].price %>"
+            required
+            pattern="^\d+(\.\d{1,2})?$"
+          />
+
+          <label for="image">Image: </label>
+          <input
+            type="text"
+            name="image"
+            id="image"
+            value="<%= selectedProduct[0].imageurl %>"
+            required
+          />
+
+          <label for="quantity">Quantity: </label>
+          <input
+            type="tel"
+            name="quantity"
+            id="quantity"
+            value="<%= selectedProduct[0].amount %>"
+            required
+          />
+
+          <button type="submit">Update</button>
+        </form>
+      </div>
+    </div>
+    <%-include('../footer')%>
+  </body>
+</html>
