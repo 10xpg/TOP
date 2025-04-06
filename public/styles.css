@@ -47,7 +47,8 @@ nav button {
 }
 
 .hero,
-.message {
+.message,
+.products {
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -60,7 +61,6 @@ nav button {
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: auto;
   gap: 20px;
-  padding: 20px;
   justify-content: center;
   width: 100%;
 }
@@ -107,4 +107,9 @@ nav button {
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(4, 1fr);
+}
+
+.category,
+.all {
+  border-radius: 20px;
 }
