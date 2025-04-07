@@ -9,6 +9,18 @@
   </head>
   <body>
     <%- include('header'); -%>
+    <dialog class="auth-modal">
+      <h2>Enable Permission for this action</h2>
+      <form action="/auth" method="post">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" />
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" />
+        <input type="hidden" name="endpoint" class="redirect-link" />
+        <button type="submit">Authorize</button>
+        <button type="button" class="modal-close">Close</button>
+      </form>
+    </dialog>
     <div class="hero">
       <div class="message">
         <h1>Welcome to 🛒 pg-Store!</h1>

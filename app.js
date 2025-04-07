@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const inventoryRouter = require("./routes/inventory");
 const formRouter = require("./routes/forms");
+const authRouter = require("./routes/auth");
 const path = require("path");
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 // -> Routes
 app.use("/", inventoryRouter);
 app.use("/form", formRouter);
+app.use("/auth", authRouter);
 
 app.listen(PORT, () => console.log(`Server listening on port: ${PORT} ...`));
 
@@ -28,5 +30,5 @@ app.listen(PORT, () => console.log(`Server listening on port: ${PORT} ...`));
 // // TODO 3: implement delete for category and products
 // // TODO 3: add way to link delete and update for products
 // // TODO 3: add way to link delete and update for category
-// TODO 6: protect UPDATE and DELETE endpoints
+// // TODO 6: protect UPDATE and DELETE endpoints
 // // TODO 7: add style to category buttons on home

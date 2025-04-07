@@ -106,6 +106,16 @@ const deleteProduct = async (productId) => {
   await pool.query("DELETE FROM product WHERE id = ($1)", [productId]);
 };
 
+const grantAccess = async (username, password) => {
+  const { rows } = await pool.query(
+    `
+    SELECT * FROM customer WHERE username = ($1) AND password = ($2)
+    `,
+    [username, password]
+  );
+  return rows;
+};
+
 module.exports = {
   getAllProducts,
   getCategoryList,
@@ -118,4 +128,5 @@ module.exports = {
   editProduct,
   deleteCategory,
   deleteProduct,
+  grantAccess,
 };
