@@ -2,6 +2,8 @@ require('dotenv').config()
 const { Client } = require('pg')
 
 const dbString = process.env.PG_CONNECTION_STRING
+const adminCode = process.env.ADMIN_SECRET
+const memberCode = process.env.MEMBER_SECRET
 
 const SQL = `
 
@@ -27,7 +29,22 @@ CREATE TABLE IF NOT EXISTS messages (
   updatedAt TIMESTAMP DEFAULT NULL
 );
 
+CREATE TABLE IF NOT EXISTS promotions (
+  id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  status VARCHAR(100),
+  secret VARCHAR (255),
+  createdAt TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP DEFAULT NULL
+);
 `
+
+const insertPasscodes = `
+
+  INSERT INTO promotions (status, secret) VALUES
+  ('member', $1 ),
+  ('admin', $2 );  
+`
+
 async function main() {
   console.log('seeding...')
   const client = new Client({
@@ -35,6 +52,7 @@ async function main() {
   })
   await client.connect()
   await client.query(SQL)
+  await client.query(insertPasscodes, [memberCode, adminCode])
   await client.end()
   console.log('CREATE TABLE')
 }

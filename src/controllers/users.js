@@ -38,17 +38,54 @@ const authenticateUserPost = [
   })
 ]
 
-const logoutUser = (req, res, next) => {
+const logoutUser = asyncHandler((req, res, next) => {
   req.logout((err) => {
     if (err) return next(err)
   })
   res.redirect('/user/login')
-}
+})
+
+const upgradeStatus = asyncHandler((req, res) => {
+  res.render('backroom')
+})
+
+const promoteToMember = asyncHandler(async (req, res) => {
+  const { username, secretcode } = req.body
+  const memberSecret = await db.getMemberSecret()
+
+  let bool = false
+  if (secretcode === memberSecret.secret) {
+    bool = true
+    await db.upgradeToMember(bool, username)
+    res.redirect('/')
+  } else {
+    await db.upgradeToMember(bool, username)
+    res.status(403).render('partials/unapproved')
+  }
+})
+
+const promoteToAdmin = asyncHandler(async (req, res) => {
+  const { username, passcode } = req.body
+  const adminSecret = await db.getAdminSecret()
+
+  let bool = false
+  if (passcode === adminSecret.secret) {
+    bool = true
+    await db.upgradeToAdmin(bool, username)
+    res.redirect('/')
+  } else {
+    await db.upgradeToAdmin(bool, username)
+    res.status(403).render('partials/unapproved')
+  }
+})
 
 module.exports = {
   createUserGet,
   createUserPost,
   authenticateUserGet,
   authenticateUserPost,
-  logoutUser
+  logoutUser,
+  upgradeStatus,
+  promoteToMember,
+  promoteToAdmin
 }
