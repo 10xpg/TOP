@@ -14,17 +14,24 @@ const createUserGet = [
   })
 ]
 
-const createUserPost = asyncHandler(async (req, res) => {
-  console.log(req.body)
-  const { firstname, lastname, username, password1 } = req.body
-  const salt = await bcrypt.genSalt(10)
-  const pwdhash = await bcrypt.hash(password1, salt)
-  await db.createUser(username, firstname, lastname, pwdhash, salt)
-  res.redirect('/')
-})
+const createUserPost = [
+  validator.validateRegister,
+  asyncHandler(async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).render('register', {
+        errors: errors.array()
+      })
+    }
+    const { firstname, lastname, username, password1 } = req.body
+    const salt = await bcrypt.genSalt(10)
+    const pwdhash = await bcrypt.hash(password1, salt)
+    await db.createUser(username, firstname, lastname, pwdhash, salt)
+    res.redirect('/')
+  })
+]
 
 const authenticateUserGet = [
-  validator.validateLogin(),
   // authMiddleware.checkIsLoggedIn(),
   asyncHandler(async (req, res) => {
     res.render('login')
@@ -32,6 +39,16 @@ const authenticateUserGet = [
 ]
 
 const authenticateUserPost = [
+  validator.validateLogin(),
+  (req, res, next) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).render('login', {
+        errors: errors.array()
+      })
+    }
+    next()
+  },
   passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/'
@@ -49,35 +66,51 @@ const upgradeStatus = asyncHandler((req, res) => {
   res.render('backroom')
 })
 
-const promoteToMember = asyncHandler(async (req, res) => {
-  const { username, secretcode } = req.body
-  const memberSecret = await db.getMemberSecret()
+const promoteToMember = [
+  validator.validateBackroomReq(),
+  asyncHandler(async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).render('backroom', {
+        errors: errors.array()
+      })
+    }
+    const { username, secretcode } = req.body
+    const memberSecret = await db.getMemberSecret()
 
-  let bool = false
-  if (secretcode === memberSecret.secret) {
-    bool = true
-    await db.upgradeToMember(bool, username)
-    res.redirect('/')
-  } else {
-    await db.upgradeToMember(bool, username)
-    res.status(403).render('partials/unapproved')
-  }
-})
+    let bool = false
+    if (secretcode === memberSecret.secret) {
+      bool = true
+      await db.upgradeToMember(bool, username)
+      res.redirect('/')
+    } else {
+      await db.upgradeToMember(bool, username)
+      res.status(403).render('partials/unapproved')
+    }
+  })
+]
 
-const promoteToAdmin = asyncHandler(async (req, res) => {
-  const { username, passcode } = req.body
-  const adminSecret = await db.getAdminSecret()
+const promoteToAdmin = [
+  validator.validateBackroomReq(),
+  asyncHandler(async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).render('backroom', { errors: errors.array() })
+    }
+    const { username, passcode } = req.body
+    const adminSecret = await db.getAdminSecret()
 
-  let bool = false
-  if (passcode === adminSecret.secret) {
-    bool = true
-    await db.upgradeToAdmin(bool, username)
-    res.redirect('/')
-  } else {
-    await db.upgradeToAdmin(bool, username)
-    res.status(403).render('partials/unapproved')
-  }
-})
+    let bool = false
+    if (passcode === adminSecret.secret) {
+      bool = true
+      await db.upgradeToAdmin(bool, username)
+      res.redirect('/')
+    } else {
+      await db.upgradeToAdmin(bool, username)
+      res.status(403).render('partials/unapproved')
+    }
+  })
+]
 
 module.exports = {
   createUserGet,

@@ -35,6 +35,10 @@ const validateRegister = () => {
       .isLength({ min: 8 })
       .withMessage('Length must be at least 8 characters long')
       .matches(/^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])[A-Za-z\d\W_]$/)
+      .custom((value, { req }) => {
+        return value === req.body.password1
+      })
+      .withMessage('Passwords do not match!')
   ]
   return validator
 }
@@ -57,4 +61,27 @@ const validateLogin = () => {
   return validator
 }
 
-module.exports = { validateRegister, validateLogin }
+const validateBackroomReq = () => {
+  const validator = [
+    body('username')
+      .trim()
+      .notEmpty()
+      .withMessage('This field cannot be empty')
+      .isLength({ min: 1, max: 50 })
+      .withMessage('Length must be greater than 1 and less than 50 characters')
+      .toLowerCase(),
+    body('secretcode')
+      .notEmpty()
+      .withMessage('This field cannot be empty')
+      .isLength({ min: 6, max: 6 })
+      .withMessage('Length must be 6 characters long'),
+    body('passcode')
+      .notEmpty()
+      .withMessage('This field cannot be empty')
+      .isLength({ min: 6, max: 6 })
+      .withMessage('Length must be 6 characters long')
+  ]
+  return validator
+}
+
+module.exports = { validateRegister, validateLogin, validateBackroomReq }
