@@ -7,7 +7,6 @@ const { validationResult } = require('express-validator')
 const authMiddleware = require('../utils/passport')
 
 const createUserGet = [
-  validator.validateRegister(),
   // authMiddleware.checkIsLoggedIn(),
   asyncHandler((req, res) => {
     res.render('register')
@@ -18,6 +17,7 @@ const createUserPost = [
   validator.validateRegister,
   asyncHandler(async (req, res) => {
     const errors = validationResult(req)
+    console.log(errors)
     if (!errors.isEmpty()) {
       return res.status(400).render('register', {
         errors: errors.array()
@@ -39,7 +39,7 @@ const authenticateUserGet = [
 ]
 
 const authenticateUserPost = [
-  validator.validateLogin(),
+  validator.validateLogin,
   (req, res, next) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -67,7 +67,7 @@ const upgradeStatus = asyncHandler((req, res) => {
 })
 
 const promoteToMember = [
-  validator.validateBackroomReq(),
+  validator.validateMemberReq,
   asyncHandler(async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -91,7 +91,7 @@ const promoteToMember = [
 ]
 
 const promoteToAdmin = [
-  validator.validateBackroomReq(),
+  validator.validateAdminReq,
   asyncHandler(async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
