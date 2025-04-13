@@ -50,7 +50,7 @@ const authenticateUserPost = [
     next()
   },
   passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: '/message',
     failureRedirect: '/'
   })
 ]

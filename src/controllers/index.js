@@ -1,5 +1,5 @@
 const getEntry = (req, res) => {
-  res.render('home')
+  res.render('index')
 }
 
 module.exports = { getEntry }

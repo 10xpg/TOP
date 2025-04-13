@@ -88,4 +88,15 @@ const validateAdminReq = [
     .withMessage('Length must be 6 characters long')
 ]
 
-module.exports = { validateRegister, validateLogin, validateMemberReq, validateAdminReq }
+const validateMessage = [
+  body('title')
+    .trim()
+    .notEmpty()
+    .withMessage('This field cannot be empty')
+    .isLength({ min: 1, max: 255 })
+    .withMessage('Length must be greater than 1 and less than 255 characters'),
+
+  body('message').notEmpty().withMessage('This field cannot be empty').isLength({ min: 1 }).withMessage('Field cannot be empty')
+]
+
+module.exports = { validateRegister, validateLogin, validateMemberReq, validateAdminReq, validateMessage }

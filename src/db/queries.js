@@ -34,6 +34,52 @@ const upgradeToAdmin = async (bool, username) => {
   )
 }
 
+const createMessage = async (userId, title, message) => {
+  await pool.query(
+    `
+    INSERT INTO messages (userid, title, message) VALUES
+    ($1, $2, $3)
+    `,
+    [userId, title, message]
+  )
+}
+
+const updateMessage = async (msgId, title, message, userId) => {
+  await pool.query(
+    `
+  UPDATE messages SET title = $2, message = $3, updatedat = CURRENT_TIMESTAMP WHERE id = $1 AND userid = $4
+  `,
+    [msgId, title, message, userId]
+  )
+}
+
+const deleteMessage = async (msgId) => {
+  await pool.query(
+    `
+    DELETE FROM messages WHERE id = $1
+    `,
+    [msgId]
+  )
+}
+
+const getAllMessages = async () => {
+  const { rows } = await pool.query(`
+    SELECT * FROM messages
+  `)
+  return rows
+}
+
+const findMessageById = async (msgId) => {
+  const { rows } = await pool.query(
+    `
+    SELECT * FROM messages WHERE id = $1
+  `,
+    [msgId]
+  )
+  const message = rows[0]
+  return message
+}
+
 const createUser = async (username, firstname, lastname, password, salt) => {
   await pool.query(
     `
@@ -66,4 +112,17 @@ const findUserByUserId = async (userId) => {
   return user
 }
 
-module.exports = { createUser, findUserByUsername, findUserByUserId, getAdminSecret, getMemberSecret, upgradeToMember, upgradeToAdmin }
+module.exports = {
+  createUser,
+  findUserByUsername,
+  findUserByUserId,
+  getAdminSecret,
+  getMemberSecret,
+  upgradeToMember,
+  upgradeToAdmin,
+  createMessage,
+  updateMessage,
+  deleteMessage,
+  getAllMessages,
+  findMessageById
+}

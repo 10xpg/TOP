@@ -7,6 +7,7 @@ const pgStore = require('./db/sessionstore')
 const passport = require('passport')
 const userRouter = require('./routes/users')
 const indexRouter = require('./routes/index')
+const messageRouter = require('./routes/messages')
 
 const cookieSecret = process.env.COOKIE_SECRET
 const port = process.env.PORT
@@ -32,6 +33,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(ExpressSession)
 app.use(passport.session())
+app.use(express.static('public'))
 
 app.use((req, res, next) => {
   console.log(req.session)
@@ -42,5 +44,6 @@ app.use((req, res, next) => {
 // ->  Routes
 app.use('/', indexRouter)
 app.use('/user', userRouter)
+app.use('/message', messageRouter)
 
 app.listen(PORT, () => console.log(`express app listening on port: ${PORT} ...`))
