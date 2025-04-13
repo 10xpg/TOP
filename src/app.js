@@ -49,3 +49,5 @@ app.use('/user', userRouter)
 app.use('/message', messageRouter)
 
 app.listen(PORT, () => console.log(`express app listening on port: ${PORT} ...`))
+
+// TODO: fix bug causing messages not render at '/' sometimes

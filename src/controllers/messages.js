@@ -8,9 +8,9 @@ const getMessagesGet = [
   authMiddleware.checkIsMember,
   asyncHandler(async (req, res) => {
     const messages = await db.getAllMessages()
-    // console.log(messages)
+    const { isadmin } = req.user
 
-    res.render('home', { messages: messages })
+    res.render('home', { messages: messages, userIsAdmin: isadmin })
   })
 ]
 

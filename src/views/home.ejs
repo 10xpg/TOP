@@ -18,7 +18,9 @@
                 <small>By <%= msg.firstname %> <%= msg.lastname%> at <%= msg.updatedat || msg.createdat %></small>
                 <br>
                 <a href="/message/update/<%= msg.id %>">edit</a>
+                <% if (userIsAdmin) {%>
                 <a href="/message/delete/<%= msg.id %>">delete</a>
+                <% } %>
             </div>
         <% }) %>
     <%}%>
