@@ -64,7 +64,8 @@ const deleteMessage = async (msgId) => {
 
 const getAllMessages = async () => {
   const { rows } = await pool.query(`
-    SELECT * FROM messages
+    SELECT messages.id, userid, title, message, messages.createdat, messages.updatedat, firstname, lastname FROM messages 
+    INNER JOIN users ON messages.userid = users.id
   `)
   return rows
 }

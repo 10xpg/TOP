@@ -2,16 +2,24 @@ const db = require('../db/queries')
 const validator = require('../utils/validators')
 const asyncHandler = require('express-async-handler')
 const { validationResult } = require('express-validator')
+const authMiddleware = require('../utils/passport')
 
-const getMessagesGet = asyncHandler(async (req, res) => {
-  const messages = await db.getAllMessages()
-  console.log(messages)
-  res.render('home', { messages: messages })
-})
+const getMessagesGet = [
+  authMiddleware.checkIsMember,
+  asyncHandler(async (req, res) => {
+    const messages = await db.getAllMessages()
+    // console.log(messages)
 
-const createMessageGet = asyncHandler((req, res) => {
-  res.render('newmessage')
-})
+    res.render('home', { messages: messages })
+  })
+]
+
+const createMessageGet = [
+  authMiddleware.checkIsMember,
+  asyncHandler((req, res) => {
+    res.render('newmessage')
+  })
+]
 
 const createMessagePost = [
   validator.validateMessage,
@@ -29,13 +37,16 @@ const createMessagePost = [
   })
 ]
 
-const updateMessageGet = asyncHandler(async (req, res) => {
-  const { msgId } = req.params
+const updateMessageGet = [
+  authMiddleware.checkIsMember,
+  asyncHandler(async (req, res) => {
+    const { msgId } = req.params
 
-  const messageToUpdate = { id: null, title: null, message: null }
-  const message = await db.findMessageById(msgId)
-  res.render('updatemessage', { message: message, messageToUpdate: messageToUpdate })
-})
+    const messageToUpdate = { id: null, title: null, message: null }
+    const message = await db.findMessageById(msgId)
+    res.render('updatemessage', { message: message, messageToUpdate: messageToUpdate })
+  })
+]
 
 const updateMessagePost = [
   validator.validateMessage,
@@ -55,10 +66,13 @@ const updateMessagePost = [
   })
 ]
 
-const deleteMessageGet = asyncHandler(async (req, res) => {
-  const { msgId } = req.params
-  await db.deleteMessage(msgId)
-  res.redirect('/message')
-})
+const deleteMessageGet = [
+  authMiddleware.checkIsAdmin,
+  asyncHandler(async (req, res) => {
+    const { msgId } = req.params
+    await db.deleteMessage(msgId)
+    res.redirect('/message')
+  })
+]
 
 module.exports = { getMessagesGet, createMessageGet, createMessagePost, updateMessageGet, updateMessagePost, deleteMessageGet }

@@ -7,7 +7,6 @@ const { validationResult } = require('express-validator')
 const authMiddleware = require('../utils/passport')
 
 const createUserGet = [
-  // authMiddleware.checkIsLoggedIn(),
   asyncHandler((req, res) => {
     res.render('register')
   })
@@ -32,7 +31,7 @@ const createUserPost = [
 ]
 
 const authenticateUserGet = [
-  // authMiddleware.checkIsLoggedIn(),
+  authMiddleware.checkIsLoggedIn,
   asyncHandler(async (req, res) => {
     res.render('login')
   })
@@ -51,16 +50,21 @@ const authenticateUserPost = [
   },
   passport.authenticate('local', {
     successRedirect: '/message',
-    failureRedirect: '/'
+    failureRedirect: '/user/login?msg=invalid-credentials',
+    successFlash: 'logged in',
+    failureFlash: 'authentication failed'
   })
 ]
 
-const logoutUser = asyncHandler((req, res, next) => {
-  req.logout((err) => {
-    if (err) return next(err)
-  })
-  res.redirect('/user/login')
-})
+const logoutUser = [
+  asyncHandler(async (req, res, next) => {
+    req.logout((err) => {
+      if (err) return next(err)
+      next()
+    })
+  }),
+  authMiddleware.checkIsAuthenticated
+]
 
 const upgradeStatus = asyncHandler((req, res) => {
   res.render('backroom')
@@ -82,7 +86,7 @@ const promoteToMember = [
     if (secretcode === memberSecret.secret) {
       bool = true
       await db.upgradeToMember(bool, username)
-      res.redirect('/')
+      res.redirect('/message')
     } else {
       await db.upgradeToMember(bool, username)
       res.status(403).render('partials/unapproved')

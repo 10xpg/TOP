@@ -8,6 +8,7 @@ const passport = require('passport')
 const userRouter = require('./routes/users')
 const indexRouter = require('./routes/index')
 const messageRouter = require('./routes/messages')
+const flash = require('connect-flash')
 
 const cookieSecret = process.env.COOKIE_SECRET
 const port = process.env.PORT
@@ -33,6 +34,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(ExpressSession)
 app.use(passport.session())
+app.use(flash())
 app.use(express.static('public'))
 
 app.use((req, res, next) => {

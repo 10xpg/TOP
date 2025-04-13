@@ -9,5 +9,16 @@
     <h1>Welcome to the Club</h1>
     <a href="/user/login">Login</a>
     <a href="/user/register">Create an Account</a>
+    <a href="/user/backroom">Become a member</a>
+    <h2>Messages</h2>
+    <% if (!user) {%>
+      <div>
+        <% messages.map((msg) => { %>  
+          <h3><%= msg.title %></h3>
+          <div><p><%= msg.message %></p></div>
+          <small>By AnonymousUser </small>
+        <% })%>
+      </div>
+    <% }%>
   </body>
 </html>

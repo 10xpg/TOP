@@ -8,17 +8,17 @@
   <body>
     <h1>Home</h1>
     <a href="/message/create">Create a new message</a>
+    <a href="/user/logout">Logout</a>
     <h2>Messages</h2>
     <% if (messages){ %>
         <% messages.map((msg) => { %>
             <div>
                 <h3><%= msg.title %></h3>
                 <div><p><%= msg.message %></p></div>
-                <small><%= msg.updatedat || msg.createdat %></small>
+                <small>By <%= msg.firstname %> <%= msg.lastname%> at <%= msg.updatedat || msg.createdat %></small>
                 <br>
                 <a href="/message/update/<%= msg.id %>">edit</a>
                 <a href="/message/delete/<%= msg.id %>">delete</a>
-                
             </div>
         <% }) %>
     <%}%>

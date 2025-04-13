@@ -37,22 +37,33 @@ passport.deserializeUser(async (userId, done) => {
 const checkIsAuthenticated = asyncHandler((req, res, next) => {
   if (!req.isAuthenticated()) {
     return res.status(401).render('partials/isauthenticated')
+  } else {
+    next()
   }
-  next()
 })
 
 const checkIsAdmin = asyncHandler((req, res, next) => {
-  if (req.isAuthenticated() && req.user.admin) {
+  if (req.isAuthenticated() && req.user.isadmin) {
     next()
+  } else {
+    res.status(401).render('partials/isadmin')
   }
-  res.status(401).render('partials/isadmin')
 })
 
-// const checkIsLoggedIn = asyncHandler((req, res, next) => {
-//   if (!req.isUnauthenticated()) {
-//     res.redirect('/')
-//   }
-//   next()
-// })
+const checkIsMember = asyncHandler((req, res, next) => {
+  if (req.isAuthenticated() && req.user.ismember) {
+    next()
+  } else {
+    res.status(401).render('partials/unapproved')
+  }
+})
 
-module.exports = { checkIsAuthenticated, checkIsAdmin }
+const checkIsLoggedIn = asyncHandler((req, res, next) => {
+  if (!req.isAuthenticated()) {
+    next()
+  } else {
+    res.redirect('/message')
+  }
+})
+
+module.exports = { checkIsAuthenticated, checkIsAdmin, checkIsMember, checkIsLoggedIn }
