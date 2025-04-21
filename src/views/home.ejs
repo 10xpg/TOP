@@ -15,8 +15,8 @@
         <label for="Directory">Choose a folder to upload to: </label>
         <select name="dirname" id="directory">
           <option value="" disabled >--Select a folder--</option>
-           <%if(locals.folders){%> 
-            <%folders.map((folder) => {%>
+           <%if(locals.directories){%> 
+            <% directories.map((folder) => {%>
             <option value="<%= folder.dirname %>">
               <%= folder.dirname %>
             </option>
@@ -38,16 +38,10 @@
     </form>
     <h2>Directories</h2>
     <a href="/directories/create">Create a new folder</a>
-    <% if (folders){ %>
-      <% folders.map((folder) => { %>
-        <div>
-          <br>
-          <strong><%= folder.dirname %></strong>
-          <a href="/#">open</a>
-          <a href="/directories/rename/<%= folder.dirname %>">edit</a>
-          <a href="/directories/delete/<%= folder.dirname %>">delete</a>
-        </div>
-      <% }) %>
+    <% if (folders && folders.length ){ %>
+      <%- include('./partials/folderTree', { folders }) %>
+    <% } else { %>
+      <p>No folders yet.</p>
     <%}%>
   </body>
 </html>

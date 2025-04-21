@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler')
 const multer = require('multer')
 const db = require('../db/queries')
 const path = require('path')
+const { filesize } = require('filesize')
 
 const upload = multer({ dest: 'uploads/' })
 
@@ -20,4 +21,12 @@ const fileUploadPost = [
   })
 ]
 
-module.exports = { fileUploadPost }
+const fileDetailsGet = async (req, res) => {
+  const { filename } = req.params
+  const file = await db.files.getSingleFile(filename)
+  file.size = filesize(file.size)
+
+  res.render('fileDetails', { details: file })
+}
+
+module.exports = { fileUploadPost, fileDetailsGet }

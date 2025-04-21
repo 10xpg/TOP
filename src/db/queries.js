@@ -83,7 +83,7 @@ const files = {
   },
 
   getSingleFile: async (ogname) => {
-    const file = await prisma.file.findUnique({
+    const file = await prisma.file.findFirst({
       where: {
         originalname: ogname
       }
@@ -109,13 +109,13 @@ const folders = {
 
   // -> Read
   getAllDirectories: async () => {
-    const dirs = await prisma.directory.findMany({ include: { children: true } })
+    const dirs = await prisma.directory.findMany({ include: { files: true, children: true } })
     return dirs
   },
 
   getSingleDirectory: async (ownerId, dirname) => {
     const dir = await prisma.directory.findFirst({
-      include: { files: true },
+      include: { files: true, children: true },
       where: {
         ownerId: ownerId,
         AND: {

@@ -22,7 +22,7 @@ const editFolderGet = async (req, res) => {
 const editFolderPost = async (req, res) => {
   const { id } = req.user
   const { oldname, folder } = req.body
-  const dirId = await db.folders.getDirectoryId(id, oldname)
+
   await db.folders.updateSingleDirectory(id, oldname, folder)
   res.redirect('/home')
 }
@@ -34,10 +34,18 @@ const deleteFolderGet = async (req, res) => {
   res.redirect('/home')
 }
 
+const openFolderGet = async (req, res) => {
+  const { id } = req.user
+  const { dirname } = req.params
+  const folder = await db.folders.getSingleDirectory(id, dirname)
+  res.render('directory', { dirname, folder })
+}
+
 module.exports = {
   createFolderGet,
   createFolderPost,
   editFolderGet,
   editFolderPost,
-  deleteFolderGet
+  deleteFolderGet,
+  openFolderGet
 }
