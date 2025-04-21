@@ -14,7 +14,7 @@
             <br>
             
             <div>
-                <a href=""><%= file.originalname %></a>
+                <a href="/files/<%= file.originalname %>/download" download="<%= file.originalname %>"><%= file.originalname %></a>
                 <br>
                 [<a href="/files/<%= file.originalname %>/details">details</a>]
             </div>
