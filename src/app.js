@@ -7,6 +7,8 @@ const passport = require('passport')
 const prismaStore = require('../src/db/sessionstore')
 const usersRouter = require('./routers/users')
 const indexRouter = require('./routers/index')
+const filesRouter = require('./routers/files')
+const directoriesRouter = require('./routers/dirs')
 
 const port = process.env.EXPRESS_PORT
 const cookieSecret = process.env.COOKIE_SECRET
@@ -42,5 +44,9 @@ app.use((req, res, next) => {
 // ->  Routes
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
+app.use('/files', filesRouter)
+app.use('/directories', directoriesRouter)
 
 app.listen(port, () => console.log(`express app listening on port: ${port} ...`))
+
+// todo: add asynchandler and validator to users related routes and views(ie.forms)

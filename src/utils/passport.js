@@ -40,3 +40,15 @@ passport.deserializeUser(async (userId, done) => {
     return done(err)
   }
 })
+
+// -> Permissions Middlewares using passport
+
+const checkIsAuthenticated = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).render('unauth')
+  } else {
+    next()
+  }
+}
+
+module.exports = { checkIsAuthenticated }
