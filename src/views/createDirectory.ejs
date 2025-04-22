@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Virtual Drive | Home</title>
+    <title>Virtual Drive | Create Folder</title>
   </head>
   <body>
     <h1>Create Directory</h1>
@@ -11,6 +11,19 @@
       <div>
         <label for="folder">Folder Name: </label>
         <input type="text" id="folder" name="folder" />
+        <label for="location">Folder Location: </label>
+        <select name="location" id="directory">
+          <option value="" disabled >--Select a folder--</option>
+           <%if(locals.dirs){%> 
+            <% dirs.map((folder) => {%>
+            <option value="<%= folder.dirname %>">
+              <%= folder.dirname %>
+            </option>
+            <%})%> <%}%>
+        </select>
+        <br>
+        <small>note: if ommitted defaults to the root folder</small>
+        
       </div>
       <div>
         <input type="submit" />

@@ -49,4 +49,5 @@ app.use('/directories', directoriesRouter)
 
 app.listen(port, () => console.log(`express app listening on port: ${port} ...`))
 
+// todo: add location for folder creation
 // todo: add asynchandler and validator to users related routes and views(ie.forms)

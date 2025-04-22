@@ -1,14 +1,17 @@
 const db = require('../db/queries')
 
-const createFolderGet = (req, res) => {
-  res.render('createDirectory')
+const createFolderGet = async (req, res) => {
+  const dirs = await db.folders.getAllDirectories()
+  res.render('createDirectory', { dirs })
 }
 
 const createFolderPost = async (req, res) => {
-  const { folder } = req.body
+  const { folder, location } = req.body
   const { id } = req.user
   const root = await db.folders.getSingleDirectory(id, 'root')
-  await db.folders.createDirectory(id, folder, root.id)
+  const chosendir = await db.folders.getSingleDirectory(id, location)
+
+  await db.folders.createDirectory(id, folder, chosendir.id || root.id)
   res.redirect('/home')
 }
 
