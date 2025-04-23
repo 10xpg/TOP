@@ -57,7 +57,7 @@ model File {
   owner        User        @relation(fields: [ownerId], references: [id])
   ownerId      String
   originalname String
-  name         String
+  name         String?
   extension    String
   size         Int
   mimetype     String
