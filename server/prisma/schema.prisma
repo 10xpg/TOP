@@ -22,8 +22,8 @@ model User {
   hashedpwd String
   role      Role      @default(VIEWER)
   joinedAt  DateTime  @default(now())
-  Post      Post[]
-  Comment   Comment[]
+  Posts     Post[]
+  Comments  Comment[]
 
   @@map("users")
 }
@@ -37,7 +37,7 @@ model Post {
   published Boolean   @default(false)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Comment   Comment[]
+  Comments  Comment[]
 
   @@map("posts")
 }

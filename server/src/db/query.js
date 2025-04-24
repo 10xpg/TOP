@@ -9,15 +9,32 @@ const users = {
         firstname: fname,
         lastname: lname,
         hashedpwd: hashedPwd
+      },
+      omit: {
+        hashedpwd: true
       }
     })
     return newUser
+  },
+
+  getAllUsers: async () => {
+    const users = await client.user.findMany({
+      omit: {
+        hashedpwd: true,
+        joinedAt: true
+      }
+    })
+    return users
   },
 
   getUserByEmail: async (email) => {
     const user = await client.user.findUnique({
       where: {
         email: email
+      },
+      omit: {
+        hashedpwd: true,
+        joinedAt: true
       }
     })
     return user
@@ -27,14 +44,37 @@ const users = {
     const user = await client.user.findUnique({
       where: {
         id: userId
+      },
+      omit: {
+        hashedpwd: true,
+        joinedAt: true
       }
     })
     return user
   },
 
-  promoteToAuthor: async (email) => {
+  updateUserInfo: async (userId, email, fname, lname) => {
     const user = await client.user.update({
       where: {
+        id: userId
+      },
+      data: {
+        email: email,
+        firstname: fname,
+        lastname: lname
+      },
+      omit: {
+        hashedpwd: true,
+        joinedAt: true
+      }
+    })
+    return user
+  },
+
+  promoteToAuthor: async (userId, email) => {
+    const user = await client.user.update({
+      where: {
+        id: userId,
         email: email,
         role: {
           equals: 'VIEWER'
@@ -42,18 +82,46 @@ const users = {
       },
       data: {
         role: 'AUTHOR'
+      },
+      omit: {
+        hashedpwd: true,
+        joinedAt: true
       }
     })
     return user
   },
 
-  deleteUser: async (email) => {
-    const user = await client.user.delete({
+  demoteToViewer: async (userId, email) => {
+    const user = await client.user.update({
       where: {
-        email: email
+        id: userId,
+        email: email,
+        role: {
+          equals: 'AUTHOR'
+        }
+      },
+      data: {
+        role: 'VIEWER'
+      },
+      omit: {
+        hashedpwd: true,
+        joinedAt: true
       }
     })
-    return { message: `User with email ${email} has been removed`, details: user }
+    return user
+  },
+
+  deleteUser: async (userId) => {
+    const user = await client.user.delete({
+      where: {
+        id: userId
+      },
+      omit: {
+        hashedpwd: true,
+        joinedAt: true
+      }
+    })
+    return { message: `User with userId '${userId}' has been removed`, details: user }
   }
 }
 
@@ -131,11 +199,11 @@ const posts = {
 }
 
 const comments = {
-  createComment: async (postId, commenterId, comment) => {
+  createComment: async (postId, commenterId, body) => {
     const comment = await client.comment.create({
       include: { commenter: true, post: true },
       data: {
-        comment: comment,
+        comment: body,
         post: {
           connect: {
             id: postId
@@ -148,6 +216,7 @@ const comments = {
         }
       }
     })
+    return comment
   },
 
   getAllCommentsLinkedToPost: async (postId) => {
