@@ -71,44 +71,47 @@ const users = {
     return user
   },
 
-  promoteToAuthor: async (userId, email) => {
-    const user = await client.user.update({
+  updateUserRole: async (userId, email) => {
+    const user = await client.user.findUnique({
       where: {
         id: userId,
-        email: email,
-        role: {
-          equals: 'VIEWER'
-        }
-      },
-      data: {
-        role: 'AUTHOR'
-      },
-      omit: {
-        hashedpwd: true,
-        joinedAt: true
+        email: email
       }
     })
-    return user
-  },
 
-  demoteToViewer: async (userId, email) => {
-    const user = await client.user.update({
-      where: {
-        id: userId,
-        email: email,
-        role: {
-          equals: 'AUTHOR'
+    let updatedUser = undefined
+
+    if (user.role === 'VIEWER') {
+      updatedUser = await client.user.update({
+        where: {
+          id: userId,
+          email: email
+        },
+        data: {
+          role: 'AUTHOR'
+        },
+        omit: {
+          hashedpwd: true,
+          joinedAt: true
         }
-      },
-      data: {
-        role: 'VIEWER'
-      },
-      omit: {
-        hashedpwd: true,
-        joinedAt: true
-      }
-    })
-    return user
+      })
+      return updatedUser
+    } else {
+      updatedUser = await client.user.update({
+        where: {
+          id: userId,
+          email: email
+        },
+        data: {
+          role: 'VIEWER'
+        },
+        omit: {
+          hashedpwd: true,
+          joinedAt: true
+        }
+      })
+      return updatedUser
+    }
   },
 
   deleteUser: async (userId) => {

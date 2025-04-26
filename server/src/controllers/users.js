@@ -61,12 +61,20 @@ const downgradeUser = async (req, res) => {
   res.json({ message: 'Downgrade successful ', ...user })
 }
 
+const changeUserRole = async (req, res) => {
+  const { id } = req.params
+  if (!req.body) return res.status(400).json({ status: 'error', message: 'Bad Request' })
+  const { email } = req.body
+  const user = await db.users.updateUserRole(Number(id), email)
+  if (!user) return res.status(400).json({ status: 'error', message: 'User role change failed' })
+  res.json({ message: 'Operation successful ', ...user })
+}
+
 module.exports = {
   createUser,
   getAllUsers,
   getUser,
   updateUser,
   deleteUser,
-  upgradeUser,
-  downgradeUser
+  changeUserRole
 }
