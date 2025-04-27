@@ -36,29 +36,11 @@ const updateUser = async (req, res) => {
 }
 
 const deleteUser = async (req, res) => {
-  if (!req.params) return res.status(400).json({ status: 'error', message: 'Bad Request' })
   const { id } = req.params
+  if (!req.params) return res.status(400).json({ status: 'error', message: 'Bad Request' })
   const user = await db.users.deleteUser(Number(id))
   if (!user) return res.status(404).json({ status: 'error', message: `User with id: '${id}' does not exist` })
   res.json({ ...user })
-}
-
-const upgradeUser = async (req, res) => {
-  const { id } = req.params
-  if (!req.body) return res.status(400).json({ status: 'error', message: 'Bad Request' })
-  const { email } = req.body
-  const user = await db.users.promoteToAuthor(Number(id), email)
-  if (!user) return res.status(400).json({ status: 'error', message: 'Upgrade failed' })
-  res.json({ message: 'Upgrade successful ', ...user })
-}
-
-const downgradeUser = async (req, res) => {
-  const { id } = req.params
-  if (!req.body) return res.status(400).json({ status: 'error', message: 'Bad Request' })
-  const { email } = req.body
-  const user = await db.users.demoteToViewer(Number(id), email)
-  if (!user) return res.status(400).json({ status: 'error', message: 'Upgrade failed' })
-  res.json({ message: 'Downgrade successful ', ...user })
 }
 
 const changeUserRole = async (req, res) => {
@@ -66,7 +48,7 @@ const changeUserRole = async (req, res) => {
   if (!req.body) return res.status(400).json({ status: 'error', message: 'Bad Request' })
   const { email } = req.body
   const user = await db.users.updateUserRole(Number(id), email)
-  if (!user) return res.status(400).json({ status: 'error', message: 'User role change failed' })
+  if (!user) return res.status(400).json({ status: 'error', message: 'Operation failed' })
   res.json({ message: 'Operation successful ', ...user })
 }
 

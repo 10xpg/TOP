@@ -132,14 +132,20 @@ const posts = {
   createPost: async (userId, title, body) => {
     const post = await client.post.create({
       include: {
-        author: true
+        author: {
+          omit: {
+            id: true,
+            hashedpwd: true,
+            joinedAt: true
+          }
+        }
       },
       data: {
         author: { connect: { id: userId } },
         title: title,
-        content,
-        body
-      }
+        content: body
+      },
+      omit: { authorId: true }
     })
     return post
   },
@@ -179,16 +185,37 @@ const posts = {
     })
     return post
   },
+
   publishPost: async (postId) => {
-    const post = await client.post.update({
+    const getPost = await client.post.findUnique({
       where: {
         id: postId
-      },
-      data: {
-        published: true
       }
     })
-    return post
+
+    let post = undefined
+
+    if (!getPost.published) {
+      post = await client.post.update({
+        where: {
+          id: postId
+        },
+        data: {
+          published: true
+        }
+      })
+      return post
+    } else {
+      post = await client.post.update({
+        where: {
+          id: postId
+        },
+        data: {
+          published: false
+        }
+      })
+      return post
+    }
   },
 
   deleteSinglePost: async (postId) => {
