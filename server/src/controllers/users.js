@@ -1,5 +1,10 @@
+require('dotenv').config()
 const bcrypt = require('bcryptjs')
 const db = require('../db/query')
+const jwt = require('jsonwebtoken')
+const passport = require('passport')
+
+const SECRET = process.env.JWT_SECRET
 
 const createUser = async (req, res) => {
   if (!req.body) return res.status(400).json({ status: 'error', message: 'Bad Request' })
@@ -52,11 +57,32 @@ const changeUserRole = async (req, res) => {
   res.json({ message: 'Operation successful ', ...user })
 }
 
+const login = async (req, res, next) => {
+  passport.authenticate('login', async (err, user, info) => {
+    try {
+      if (err || !user) {
+        const error = new Error('An error occured.')
+        return next(error)
+      }
+      req.login(user, { session: false }, async (err) => {
+        if (err) return next(err)
+
+        const payload = { sub: user.id, name: `${user.firstname} ${user.lastname}`, email: user.email, role: user.role }
+        jwt.sign(payload, SECRET, (err, token) => {
+          if (err) return res.status(500).json({ status: 'error', message: 'Failed to sign JWT' })
+          res.json({ message: 'Authentication Successful', token })
+        })
+      })
+    } catch (err) {}
+  })(req, res, next)
+}
+
 module.exports = {
   createUser,
   getAllUsers,
   getUser,
   updateUser,
   deleteUser,
-  changeUserRole
+  changeUserRole,
+  login
 }

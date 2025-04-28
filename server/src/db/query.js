@@ -28,13 +28,9 @@ const users = {
   },
 
   getUserByEmail: async (email) => {
-    const user = await client.user.findUnique({
+    const user = await client.user.findFirst({
       where: {
         email: email
-      },
-      omit: {
-        hashedpwd: true,
-        joinedAt: true
       }
     })
     return user
