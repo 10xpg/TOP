@@ -231,7 +231,10 @@ const posts = {
 const comments = {
   createComment: async (postId, commenterId, body) => {
     const comment = await client.comment.create({
-      include: { commenter: true, post: true },
+      include: {
+        commenter: { omit: { id: true, hashedpwd: true, role: true, joinedAt: true } },
+        post: { omit: { id: true, authorId: true, published: true, createdAt: true, updatedAt: true } }
+      },
       data: {
         comment: body,
         post: {
@@ -244,6 +247,12 @@ const comments = {
             id: commenterId
           }
         }
+      },
+      omit: {
+        id: true,
+        commenterId: true,
+        postId: true,
+        updatedAt: true
       }
     })
     return comment
@@ -251,7 +260,7 @@ const comments = {
 
   getAllCommentsLinkedToPost: async (postId) => {
     const comments = await client.comment.findMany({
-      include: { post: true },
+      include: { post: { omit: { id: true, authorId: true, published: true, createdAt: true, updatedAt: true } } },
       where: {
         postId: postId
       }
@@ -261,7 +270,7 @@ const comments = {
 
   getCommentLinkedToPost: async (postId, commentId) => {
     const comment = await client.comment.findUnique({
-      include: { post: true },
+      include: { post: { omit: { id: true, authorId: true, published: true, createdAt: true, updatedAt: true } } },
       where: {
         id: commentId,
         postId: postId
@@ -290,7 +299,7 @@ const comments = {
         postId: postId
       }
     })
-    return { message: `Comment with ${commentId} on post with postId ${postId} has been removed`, details: comment }
+    return { message: `Comment with commentId ${commentId} on post with postId ${postId} has been removed`, details: comment }
   }
 }
 
