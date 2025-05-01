@@ -1,0 +1,43 @@
+form,
+.submit {
+  padding: 100px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
+form {
+  padding: 50px;
+}
+
+form h1,
+.submit h1 {
+  text-align: center;
+}
+form fieldset {
+  font-size: large;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  padding-right: 20px;
+}
+
+button {
+  /* background-color: limegreen; */
+  border-radius: 5px;
+  font-style: italic;
+  font-size: larger;
+  padding: 10px;
+}
+
+textarea {
+  resize: none;
+  width: 50vw;
+  height: 10vh;
+}
