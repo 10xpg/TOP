@@ -1,0 +1,87 @@
+body {
+  font-family: "Courier New", Courier, monospace;
+  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 200px 3fr;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 200px);
+  grid-template-rows: repeat(3, 200px);
+}
+
+.board button {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.turn {
+  font-size: x-large;
+  font-weight: bold;
+  padding-top: 25px;
+}
+
+h1 {
+  margin: 0;
+  padding: 25px 100px;
+  border: solid black;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: 1/3;
+  grid-row: 1/2;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  grid-column: 2/3;
+  grid-row: 2/3;
+  border: solid black;
+  border-radius: 15px;
+  padding-bottom: 100px;
+}
+
+.display {
+  grid-column: 1/2;
+  grid-row: 2/3;
+  border: solid black;
+  /* border-radius: 15px; */
+  display: grid;
+  grid-template-rows: 1fr 2fr 2fr 2fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.starter,
+.result,
+.player1,
+.player2 {
+  border: solid black;
+  border-radius: 15px;
+
+  font-size: x-large;
+}
+
+.starter {
+  font-family: monospace;
+  font-weight: bold;
+  font-size: x-large;
+  text-transform: capitalize;
+}
+
+.profile1,
+.profile2,
+.result {
+  display: flex;
+  /* flex-direction: column; */
+  align-content: center;
+  justify-content: center;
+  padding: 15px;
+}
