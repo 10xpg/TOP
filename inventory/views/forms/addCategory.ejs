@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="domStuff.js" type="module" defer></script>
+    <link rel="stylesheet" href="/styles.css" />
+    <title>Inventory | Add Category</title>
+  </head>
+  <body>
+    <%- include('../header') %>
+    <div class="hero">
+      <div class="message">
+        <h1>Welcome to 🛒 pg-Store!</h1>
+        <h2>Fill the form below to add a Category</h2>
+      </div>
+      <div class="form">
+        <h1>Add a Category</h1>
+        <%- include('../partials/error') %>
+        <form action="" method="get">
+          <label for="category">Category: </label>
+          <input
+            type="text"
+            name="category"
+            id="category"
+            required
+            minlength="1"
+          />
+          <button type="submit">Add</button>
+        </form>
+      </div>
+    </div>
+    <%- include('../footer')%>
+  </body>
+</html>

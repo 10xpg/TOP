@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/domStuff.js" type="module" defer></script>
+    <link rel="stylesheet" href="/styles.css" />
+    <title>Inventory</title>
+  </head>
+  <body>
+    <%- include('header'); -%>
+    <dialog class="auth-modal">
+      <h2>Enable Permission for this action</h2>
+      <form action="/auth" method="post">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" />
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" />
+        <input type="hidden" name="endpoint" class="redirect-link" />
+        <button type="submit">Authorize</button>
+        <button type="button" class="modal-close">Close</button>
+      </form>
+    </dialog>
+    <div class="hero">
+      <div class="message">
+        <h1>Welcome to 🛒 pg-Store!</h1>
+        <h2>Please find the Inventory of items below</h2>
+      </div>
+      <div class="categories">
+        <h1>Inventory Category</h1>
+        <nav>
+          <button class="all">all</button>
+          <div class="cat-list">
+            <% if (locals.categories){ %> <%categories.map((category)=>{%>
+            <div>
+              <button class="category"><%=category.category %></button>
+              <div>
+                <a
+                  class="update-category"
+                  href="form/category/<%= category.id %>/update"
+                  >edit</a
+                >
+
+                <a
+                  class="delete-category"
+                  href="form/category/<%= category.id %>/delete"
+                  >delete</a
+                >
+              </div>
+            </div>
+            <% })%> <% }%>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <% if (locals.products){ %>
+    <h1 class="products">Inventory Products</h1>
+    <div class="products-container">
+      <%products.map((product)=>{%>
+      <div class="product-card">
+        <div class="product-name"><%= product.name %></div>
+        <div class="description">Description: <%= product.description %></div>
+        <div class="price">Price: gh¢<%= product.price %></div>
+        <div class="quantity">Qty in stock: <%= product.amount %></div>
+        <img
+          class="product-image"
+          src="<%= product.imageurl  %>"
+          alt="<%= product.name %>"
+        />
+        <div>
+          <a class="edit-product" href="form/product/<%= product.id %>/update"
+            >edit</a
+          >
+
+          <a class="delete-product" href="form/product/<%= product.id %>/delete"
+            >delete</a
+          >
+        </div>
+      </div>
+      <% }) %> <% }%>
+    </div>
+    <%- include('footer'); -%>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles.css" />
+    <title>Inventory | Add Product</title>
+  </head>
+  <body>
+    <%-include('../header')%>
+    <div class="hero">
+      <div class="message">
+        <h1>Welcome to 🛒 pg-Store!</h1>
+        <h2>Fill the form below to add a Product</h2>
+      </div>
+      <div class="form">
+        <h1>Add a Product</h1>
+        <%- include('../partials/error') %>
+        <form action="" method="get">
+          <label for="category">Category: </label>
+          <select id="category" name="category" required>
+            <option value="">--Select a category--</option>
+            <%if(locals.categories){%> <%categories.map((category) => {%>
+            <option value="<%= category.category %>">
+              <%= category.category %>
+            </option>
+            <%})%> <%}%>
+          </select>
+
+          <label for="product">Product: </label>
+          <input type="text" name="product" id="product" required />
+
+          <label for="description">Description: </label>
+          <input type="text" name="description" id="description" required />
+
+          <label for="price">Price: </label>
+          <input
+            type="text"
+            name="price"
+            id="price"
+            required
+            pattern="^\d+(\.\d{1,2})?$"
+          />
+
+          <label for="image">Image: </label>
+          <input type="text" name="image" id="image" required />
+
+          <label for="quantity">Quantity: </label>
+          <input type="tel" name="quantity" id="quantity" required />
+
+          <input type="submit" />
+        </form>
+      </div>
+    </div>
+    <%-include('../footer')%>
+  </body>
+</html>
