@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Virtual Drive | Edit</title>
+  </head>
+  <body>
+    <h1>Rename Directory</h1>
+    <form action="/directories/rename" method="post">
+      <div>
+        <label for="folder">Rename: </label>
+        <input type="text" id="folder" name="folder" value="<%= folder.dirname %>" />
+        <input type="text" name="oldname" value="<%= folder.dirname %>" hidden />
+      </div>
+      <div>
+        <input type="submit" />
+      </div>
+    </form>
+  </body>
+</html>

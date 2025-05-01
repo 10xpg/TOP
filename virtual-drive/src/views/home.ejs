@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Virtual Drive | Home</title>
+  </head>
+  <body>
+    <h1>Home</h1>
+    <a href="/users/logout">logout</a>
+    <h2>Upload a file</h2>
+    <form action="/files/upload" method="post" enctype="multipart/form-data">
+      <div>
+
+        <label for="Directory">Choose a folder to upload to: </label>
+        <select name="dirname" id="directory">
+          <option value="" disabled >--Select a folder--</option>
+           <%if(locals.directories){%> 
+            <% directories.map((folder) => {%>
+            <option value="<%= folder.dirname %>">
+              <%= folder.dirname %>
+            </option>
+            <%})%> <%}%>
+        </select>
+        <br>
+        <small>note: if ommitted defaults to the root folder</small>
+        <br>
+        <br>
+
+      </div>
+      <div>
+        <label for="upload">Choose a file to upload: </label>
+        <input type="file" id="upload" name="uploadedfile" multiple />
+      </div>
+      <div>
+        <input type="submit" />
+      </div>
+    </form>
+    <h2>Directories</h2>
+    <a href="/directories/create">Create a new folder</a>
+    <% if (folders && folders.length ){ %>
+      <%- include('./partials/folderTree', { folders }) %>
+    <% } else { %>
+      <p>No folders yet.</p>
+    <%}%>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+<ul>
+  <% folders.forEach(folder => { %>
+    <li>
+      <strong><%= folder.dirname %></strong>
+      <a href="/directories/<%= folder.dirname %>/open">open</a>
+      <a href="/directories/<%= folder.dirname %>/rename">edit</a>
+      <a href="/directories/<%= folder.dirname %>/delete">delete</a>
+      <br>
+      
+
+      <% if (folder.subdirs && folder.subdirs.length) { %>
+        <!-- Recursively include the same partial for children -->
+        <%- include('./folderTree', { folders: folder.subdirs }) %>
+      <% } %>
+    </li>
+  <% }) %>
+</ul>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Virtual Drive | <%= dirname %></title>
+  </head>
+  <body>
+    <h1><%= dirname.charAt(0).toUpperCase() + dirname.slice(1) %></h1>
+    <a href="/home">go back</a>
+    <br>
+    <% if (folder.files){ %>
+        <% folder.files.forEach(file => { %>
+            <br>
+            
+            <div>
+                <a href="/files/<%= file.originalname %>/download" download="<%= file.originalname %>"><%= file.originalname %></a>
+                <br>
+                [<a href="/files/<%= file.originalname %>/details">details</a>]
+            </div>
+        <% }) %>
+      <% } %>
+    <%- include('./partials/folderTree', { folders: folder.children }) %>
+  </body>
+</html>

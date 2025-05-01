@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Virtual Drive | Details</title>
+  </head>
+  <body>
+    <h1>File Details</h1>
+    <a href="/home">go back</a>
+
+    <details>
+      <summary><h3>Details for <%= details.originalname %></h3></summary>
+      <h3>size</h3>
+      <p><%= details.size %></p>
+      <h3>extension</h3>
+      <p><%= details.extension %></p>
+      <h3>type</h3>
+      <p><%= details.mimetype %></p>
+      <h3>uploaded at</h3>
+      <p><%= details.uploadedAt %></p>
+    </details>
+  </body>
+</html>
