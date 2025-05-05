@@ -1,0 +1,29 @@
+.logo {
+  font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+  font-size: larger;
+  font-weight: 700;
+}
+
+.header {
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navlinks {
+  display: flex;
+  gap: 50px;
+}
+
+.navlinks a {
+  font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+  text-decoration: none;
+}
+
+.cart {
+  font-size: 25px;
+}

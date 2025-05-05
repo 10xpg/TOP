@@ -1,0 +1,38 @@
+.homepage {
+  min-height: 84vh;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.hero {
+  font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero a {
+  text-decoration: none;
+}
+
+.welcome {
+  composes: hero;
+  font-size: x-large;
+}
+
+.category {
+  font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.category-item img {
+  max-height: 500px;
+  object-fit: scale-down;
+}
+
+.category-item p {
+  text-align: center;
+}
