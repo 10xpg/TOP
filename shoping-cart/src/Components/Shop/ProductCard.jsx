@@ -4,7 +4,7 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-const ProductCard = ({ imageUrl, title, description, price }) => {
+const ProductCard = ({ id, imageUrl, title, description, price, cart }) => {
   const [quantity, setQuantity] = useState(0)
 
   const handleQuantityChange = (e) => {
@@ -18,6 +18,18 @@ const ProductCard = ({ imageUrl, title, description, price }) => {
   const handleMinusClick = () => {
     if (quantity !== 0) {
       setQuantity((quantity) => quantity - 1)
+    }
+  }
+
+  const handleAddToCart = () => {
+    if (quantity > 0) {
+      const item = {
+        id: id,
+        title: title,
+        price: price * quantity,
+        quantity: quantity
+      }
+      cart.setCartItems([...cart.cartItems, item])
     }
   }
 
@@ -35,20 +47,19 @@ const ProductCard = ({ imageUrl, title, description, price }) => {
           <p>GH¢ {price}</p>
         </div>
         <div className={styles.qty}>
-          <button type='button'>
-            <FontAwesomeIcon icon={faMinus} onClick={handleMinusClick} />
-          </button>
-
           <span>
             <label htmlFor='qty'>Qty: </label>
+            <button type='button'>
+              <FontAwesomeIcon icon={faMinus} onClick={handleMinusClick} />
+            </button>
             <input type='number' name='qty' id='qty' placeholder='0' value={quantity} onChange={handleQuantityChange} min='0' />
+            <button type='button'>
+              <FontAwesomeIcon icon={faPlus} onClick={handlePlusClick} />
+            </button>
           </span>
-          <button type='button'>
-            <FontAwesomeIcon icon={faPlus} onClick={handlePlusClick} />
-          </button>
         </div>
         <div className={styles['add-to-cart']}>
-          <button className={styles.btn} type='button'>
+          <button className={styles.btn} type='button' onClick={handleAddToCart}>
             Add To Cart
           </button>
         </div>

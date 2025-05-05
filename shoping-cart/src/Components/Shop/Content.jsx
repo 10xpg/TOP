@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { ProductCard } from './ProductCard'
 import styles from '../../Styles/Shop/Shop.module.css'
 
-const Content = () => {
+const Content = ({ cart }) => {
   const [products, setProducts] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -30,7 +30,9 @@ const Content = () => {
     <div className={styles['shop-content']}>
       {products.map((product) => (
         <ProductCard
+          cart={cart}
           key={product.id}
+          id={product.id}
           imageUrl={product.image}
           title={product.title}
           description={product.description}

@@ -26,4 +26,27 @@
 
 .cart {
   font-size: 25px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.modal {
+  font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+  font-size: medium;
+}
+
+.modal li {
+  padding: 10px;
+}
+
+.checkout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close {
+  composes: checkout;
+  justify-content: end;
 }
