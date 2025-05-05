@@ -15,3 +15,6 @@ function App() {
 }
 
 export default App
+
+// TODO: improve styles
+// TODO: write tests
